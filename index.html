@@ -13,13 +13,36 @@
     crossorigin="anonymous"></script>
     <script defer src="js/main.js"></script>
 </head>
+<header>SCORE WAR</header>
+
 <body>
-<header></header>
-<div id="boardgame">
 
-    <div class="card back-blue"></div>
-    <div class="card back-red"></div>
+<main>
+    <section id="player1">
+            <form><input id= "input1" type="text"><input id='nameBtn1' type="submit" value="ok"></form>
+            <h2></h2>
+            <div class="card back-blue"></div>
+            <div id="player1Score"></div>
 
-</div>
+    </section>
+
+    <section id="battlefield">
+            <button>Battle</button>
+            <div id="cardPlayed">
+                <div id="card1"></div>
+                <div id="card2"></div>
+            </div>
+            <div id="message"></div>
+    </section>
+    
+
+    <section id="player2">
+            <form><input id= "input2" type="text"><input id='nameBtn2' type="submit" value="ok"></form>
+            <h2></h2>
+            <div class="card back-red"></div>
+            <div id="player2Score"></div>
+
+    </section>
+</main> 
 </body>
 </html>

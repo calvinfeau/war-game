@@ -1,5 +1,5 @@
 
-// WAR GAME - Score version
+// SCORE WAR
 
 
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -8,6 +8,7 @@
 // Each player plays a card by clicking on his/her deck
 // When a player wins a round, he/she adds the difference of value to his/her score
 // The player with the highest score at the end wins!
+
 
 // ---------------------------------------------------------------------------------------------------------------------------    
 // BOARD GAME
@@ -28,7 +29,8 @@
 // ---------------------------------------------------------------------------------------------------------------------------
 // INITIALIZATION 
 
-// The users will write (input) their name where "Player 1"/"Player 2" are displayed
+// The players will write (input) their name where "Player 1"/"Player 2" are displayed
+// When both input are entered, the battle button will be enabled to initiate the gane when clicked
 
 // Each player will be an object with:
     // a name property with a value of the input previously written
@@ -78,5 +80,5 @@
 // ---------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------
 
-// WAR GAME - Overpay version
+// OVERPAY WAR
 
