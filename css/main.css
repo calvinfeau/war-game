@@ -2,16 +2,42 @@ html, * {
   box-sizing: border-box;
 }
 
-header {
-  text-align: center;
-}
 body {
   height: 100vh;
+}
+
+header {
+  text-align: center;
+  height: 15vh;
 }
 
 main {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  align-content: space-around;
+  height: 85vh;
 }
+
+section {
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.score {
+  height: 7vh;
+  width: 7vw;
+  border-radius: 0.20em;
+  border: 1px solid #c3c3c3;
+}
+
+#battlefield > #cardPlayed {
+  display: flex;
+  justify-content: space-around;
+  align-content: space-around;
+}
+
 
