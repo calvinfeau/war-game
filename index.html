@@ -7,6 +7,7 @@
     <title>War Game</title>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/cardstarter.css">
+    <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -19,28 +20,35 @@
 
 <main>
     <section id="player1">
-            <form><input id= "input1" type="text"><input id='nameBtn1' type="submit" value="ok"></form>
+            <form><input id= "input1" type="text"><input id='nameBtn1' type="submit" value="✓"></form>
             <h2></h2>
-            <div class="card back-blue"></div>
-            <div class="score" id="player1Score"></div>
+            <div class="card large back-blue"></div>
+            <div>
+                <div class="score" id="player1Score"></div>
+                <p>SCORE</p>
+            </div>
 
     </section>
 
     <section id="battlefield">
-            <button>Battle</button>
+            <button>↻</button>
             <div id="cardPlayed">
-                <div class="card" id="card1"></div>
-                <div class="card" id="card2"></div>
+                <div class="card large" id="card1"></div>
+                <div class="card large" id="card2"></div>
             </div>
-            <div id="message"></div>
+            <div id="message">/div>
     </section>
     
 
     <section id="player2">
-            <form><input id= "input2" type="text"><input id='nameBtn2' type="submit" value="ok"></form>
+            <form><input id= "input2" type="text"><input id='nameBtn2' type="submit" value="✓"></form>
             <h2></h2>
-            <div class="card back-red"></div>
-            <div class="score" id="player2Score"></div>
+            <div class="card large back-red"></div>
+            <div>
+                <div class="score" id="player2Score"></div>
+                <p>SCORE</p>
+            </div>
+            
 
     </section>
 </main> 
