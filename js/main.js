@@ -2,7 +2,6 @@
 // _____________________________________________________________
 // CONSTANTS IN THE GLOBAL SCOPE
 
-
 // full card deck (without the joker)
 const deck = [
     's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 
@@ -11,10 +10,11 @@ const deck = [
     'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'd10', 'd11', 'd12', 'd13', 'd14', 
 ];
 
+
 // _____________________________________________________________
 // STATE VARIABLES 
 
-// 2 player objects, each including 3 properties: name, playing deck, and score
+// create the 2 player's object
 var player1 = {
     name: 'Player 1'
 };
@@ -22,14 +22,9 @@ var player2 = {
     name: 'Player 2'
 };
 
-// an array that will host the deck array suffled
-var shuffleDeck, roundWinner;
+// initialize variables that will store the value of the card played by both player each round and the result of each round
+var  roundWinner, card1, card2;
 
-// an array that will host each player's shuffled deck, built from the shuffleDeck array
-var deck1, deck2;
-
-// initialize variables that will store the value of the card played by both player each round
-var card1, card2;
 
 // _____________________________________________________________
 // CACHED ELEMENT REFERENCES
@@ -52,33 +47,15 @@ const player2Deck = document.querySelector("#player2 > div.card.back-red");
 const player1Card = document.querySelector('#battlefield > #cardPlayed > #card1');
 const player2Card = document.querySelector('#battlefield > #cardPlayed > #card2');
 
+
 // _____________________________________________________________
 // EVENT LISTENERS
 
+// input buttons
+document.querySelector('#nameBtn1').addEventListener('click', player1Name);
+document.querySelector('#nameBtn2').addEventListener('click', player2Name);
 
-// document.querySelector('#battlefield > #message').textContent = 'Enter your names if you want to fight!';
-
-document.querySelector('#nameBtn1').addEventListener('click', function(event) {
-    event.preventDefault();
-    player1Input.value !== '' ? player1.name = player1Input.value : player1.name;
-    player1Title.textContent = player1.name;
-    player1Title.style.display = 'block';
-    player1Form.style.display = 'none';
-    // return player1.name;
-});    
-
-document.querySelector('#nameBtn2').addEventListener('click', function(event) {
-    event.preventDefault();
-    player2Input.value !== '' ? player2.name = player2Input.value : player2.name;
-    player2Title.textContent = player2.name;
-    player2Title.style.display = 'block';
-    player2Form.style.display = 'none';
-    // return player2.name;
-});    
-
-// 1 event listener on a reset button
-    // reload the board game
-    // enable the name's submit buttons
+// reset button
 button.addEventListener('click', init);    
 
 
@@ -87,91 +64,112 @@ button.addEventListener('click', init);
 
 init();
 
-
+// function rendering the message with the winner of the game
 function displayWinner() {
+    document.querySelector('p').style.fontSize = "14";
     player1.score > player2.score ? 
     message.textContent = `${player1.name} won the war!`
-    : message.textContent = `${player2.name} won the war!`
+    : message.textContent = `${player2.name} won the war!`;
 }
 
-// function displayMessage => render a message of the round of the winner & the winner of the game at the end
+// function rendering the message with the winner of the round
 function displayRoundWin () {
-    deck1.length === 0 ? displayWinner () : roundWinner === 'tie' ? message.textContent = `It's a ${roundWinner}!` :
+    player1.deck.length === 0 ? displayWinner () : roundWinner === 'tie' ? message.textContent = `It's a ${roundWinner}!` :
     message.textContent = `${roundWinner} won the battle!`;
 }
 
-// function displayScores => keep the score updated after each "battle"
+// function keeping the score updated after each round
 function displayScores() {
+    player1.deck.length === 26 ? (player1.score = 0, player2.score = 0) : displayRoundWin();
     document.querySelector('#player1Score').textContent = player1.score;
     document.querySelector('#player2Score').textContent = player2.score;
-    displayRoundWin();
 }
-// getScore function => calculate the difference between card1 and card2
-// if card1 - card2 return positive value, add thst value to the score property of player 1 object
-// if card1 - card2 return negative value, add this value *-1 to the score property of player 2 object
+// function calculating the difference between card1 and card2
 function getScore() {
     var roundScore = card1 - card2;
     roundScore === 0 ? roundWinner = 'tie' :
-    roundScore > 0 ? (player1.score += roundScore, roundWinner = player1.name) : (player2.score += (roundScore * -1), roundWinner = player2.name);
+    roundScore > 0 ? (player1.score += roundScore, roundWinner = player1.name, player2Card.style.opacity = "0.3") 
+    : (player2.score += (roundScore * -1), roundWinner = player2.name, player1Card.style.opacity = "0.3");
     deckButtons();
     displayScores();
 }
 
-function clickDeck1 () {
-    // disable the click on the deck
-    player1Deck.removeEventListener('click', clickDeck1);
-    
-    // assign to card1 the first parseInt value of deck1
-    card1 = parseInt(deck1[0].slice(1));
-    
-    // render the card on the battlefield
-    player1Card.setAttribute('class', `card large ${deck1[0]}`);
-    
-    // shift this value from deck1
-    deck1.shift();
-    
-    // check if player 2 played
-    deck1.length === deck2.length ? 
-    getScore() : message.textContent = `${player2.name} turn`;
+// name input function
+function player2Name() {
+    event.preventDefault();
+    player2Input.value !== '' ? player2.name = player2Input.value : player2.name;
+    player2Title.textContent = player2.name;
+    player2Title.style.display = 'block';
+    player2Form.style.display = 'none';
+}
+function player1Name() {
+    event.preventDefault();
+    player1Input.value !== '' ? player1.name = player1Input.value : player1.name;
+    player1Title.textContent = player1.name;
+    player1Title.style.display = 'block';
+    player1Form.style.display = 'none';
 }
 
+// function called on each click on a deck
+function clickDeck1 () {
+    player1Name();
+    player1Card.style.opacity = "1";
+    player2Card.style.opacity = "1"
+
+    // disable the click on the deck
+    player1Deck.removeEventListener('click', clickDeck1);
+
+    // assign to card1 the first parseInt value of deck1
+    card1 = parseInt(player1.deck[0].slice(1));
+    
+    // render the card on the battlefield
+    player1Card.setAttribute('class', `card large ${player1.deck[0]}`);
+    
+    // shift this value from player1.deck
+    player1.deck.shift();
+    
+    // check if player 2 played
+    player1.deck.length === player2.deck.length ? 
+    getScore() : message.textContent = `${player2.name}'s turn`;
+}
 function clickDeck2 () {
+    player2Name();
+    player1Card.style.opacity = "1";
+    player2Card.style.opacity = "1";
     // disable the click on the deck
     player2Deck.removeEventListener('click', clickDeck2);
     
-    // assign to card1 the first parseInt value of deck1
-    card2 = parseInt(deck2[0].slice(1));
+    // assign to card1 the first parseInt value of player1.deck
+    card2 = parseInt(player2.deck[0].slice(1));
     
     // render the card on the battlefield
-    player2Card.setAttribute('class', `card large ${deck2[0]}`);
+    player2Card.setAttribute('class', `card large ${player2.deck[0]}`);
     
-    // shift this value from deck2
-    deck2.shift();
+    // shift this value from player2.deck
+    player2.deck.shift();
     
-    // check if player 1 plauyed
-    deck2.length === deck1.length ? 
-    getScore() : message.textContent = `${player1.name} turn`;    
+    // check if player 1 played
+    player2.deck.length === player1.deck.length ? 
+    getScore() : message.textContent = `${player1.name}'s turn`;    
 }
 
+// function enabling clicks on the decks
 function deckButtons () {
     player1Deck.addEventListener('click', clickDeck1);
     player2Deck.addEventListener('click', clickDeck2);
 }
 
-// deckShuffling function => shuffling the deck array and build both shuffleDeck1 and shuffleDeck2
-// called by init function
-// assign both new arrays to both player's object
-
+// function shuffling the deck array and build both player1.deck and deck2
 function deckShuffling() {
     deck.forEach( function(card, idx, deck) { 
         var i = Math.floor(Math.random() * Math.floor(deck.length - 1));
-        (idx % 2 === 0) ? deck1.push(deck[i]) : deck2.push(deck[i]);
+        (idx % 2 === 0) ? player1.deck.push(deck[i]) : player2.deck.push(deck[i]);
     });
-    return deck1, deck2;
+    // return deck1, deck2;
 }
 
 function startingBoard() {
-    message.textContent = 'please enter your name';
+    message.textContent = 'enter your name';
     player1Card.setAttribute('class', 'card large');
     player2Card.setAttribute('class', 'card large');
 
@@ -184,25 +182,17 @@ function startingBoard() {
     player2Title.style.display = 'none';
 }
 
-// init function => initializing the board game
-// triggered by the "battle" button
-// invoke the deckShuffling function
-// invoke the render function 
-
+// function initializing the board game
 function init() {
-    deck1 = [];
-    deck2 = [];
-    // shuffling deck
+    // initialize and assign the decks
+    player1.deck = [];
+    player2.deck = [];
     deckShuffling();
-    
-    // setting up player's deck and scores
-    player1.deck = deck1;
+    // initialize player's score
     player1.score = 0;
-    player2.deck = deck2;
     player2.score = 0;
-    
-    // enable the event listeners on decks
+    // initialize the board game
+    startingBoard();
     deckButtons();
     displayScores();
-    startingBoard();
 }
