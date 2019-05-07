@@ -103,10 +103,10 @@ function getScore() {
 function cardReset() {
     player1Card.style.opacity = "1";
     player1Card.style.borderColor = '#c3c3c3';
-    player1Card.setAttribute.fontSize = "40px";
+    // player1Card.setAttribute.fontSize = "40px";
     player2Card.style.opacity = "1";
     player2Card.style.borderColor = '#c3c3c3';
-    player2Card.style.fontSize = "40px";
+    // player2Card.style.fontSize = "40px";
 }
 
 // name input function
@@ -186,7 +186,6 @@ function deckShuffling() {
         var i = Math.floor(Math.random() * Math.floor(deck.length - 1));
         (idx % 2 === 0) ? player1.deck.push(deck[i]) : player2.deck.push(deck[i]);
     });
-    // return deck1, deck2;
 }
 
 function startingBoard() {
