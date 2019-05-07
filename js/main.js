@@ -65,7 +65,45 @@ resetBtn.addEventListener('click', init);
 // _____________________________________________________________
 // FUNCTIONNALITIES
 
-init();
+introduction();
+
+function introduction() {
+    var introText = document.createElement('article');
+    var scoreChoice = document.createElement('article');
+    var scoreText = document.createElement('p');
+    var battleChoice = document.createElement('article');
+    var battleText = document.createElement('p');
+  
+    document.body.appendChild(introText);
+    document.body.appendChild(scoreChoice);
+    document.body.appendChild(battleChoice);
+    document.body.appendChild(scoreText);
+    document.body.appendChild(battleText);
+    
+    introText.setAttribute('id', 'intro-text');
+    scoreChoice.setAttribute('id', 'score-side');
+    scoreText.setAttribute('id', 'score-text');
+    battleChoice.setAttribute('id', 'battle-side');
+    battleText.setAttribute('id', 'battle-text');
+    
+    scoreChoice.addEventListener('click', scoreInit);
+    battleChoice.addEventListener('click', battleInit);
+    
+    introText.textContent = 'Pick a gameplay and enjoy!';
+    scoreChoice.textContent = 'SCORE';
+    battleChoice.textContent = 'BATTLE';
+    scoreText.textContent = 'Get points to your score each round. The highest score at the end of the battle wins!'
+    battleText.textContent = "Burn your opponent's extra cards each time you wine with a face card!"
+}
+
+function scoreInit() {
+    console.log('scoreInit working');
+}
+
+function battleInit() {
+    console.log('battleInit working');
+}
+// init();
 
 // function rendering the message with the winner of the game
 function displayWinner() {
