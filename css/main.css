@@ -23,34 +23,37 @@ header {
   display: block;
   height: 10vh;
   width: 100vw;
+  padding: 3vh 0;
   text-align: center;
-
 }
 
-#score-side, #battle-side {
+#score-choice, #battle-choice {
   display: inline-block;
-  height: 65vh;
+  height: 75vh;
   width: 50vw;
-  margin: 5px 0;
-  padding: 30vh 0;
-  font-size: 10vh;
+  margin: 0px 0;
+  padding: 30vh 0vw;
+  font-size: 2vh;
   text-align: center;
 }
 
-#score-text, #battle-text {
+/* #score-text, #battle-text {
   display: inline-block; 
   height: 10vh;
   width: 50vw;
-}
+} */
 
-#score-side {
+#score-choice {
 border-right: 1px solid #c3c3c3
 }
 
-#battle-side {
+#battle-choice {
   border-left: 1px solid #c3c3c3;
 }
 
+span {
+  font-size: 10vh;
+}
 /* SCORE VERSION SCREEN */
 
 main {

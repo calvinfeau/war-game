@@ -31,6 +31,7 @@ var  roundWinner, card1, card2;
 
 // reset button and message
 const resetBtn = document.querySelector('.menu > #reset');
+const menuBtn = document.querySelector('.menu > #battleGame');
 const message = document.querySelector('#battlefield > #message');
 
 // player's inputs and titles
@@ -59,51 +60,106 @@ document.querySelector('#nameBtn1').addEventListener('click', player1Name);
 document.querySelector('#nameBtn2').addEventListener('click', player2Name);
 
 // reset button
-resetBtn.addEventListener('click', init);    
-
+resetBtn.addEventListener('click', reset);    
+menuBtn.addEventListener('click', function() {location.reload()});
 
 // _____________________________________________________________
 // FUNCTIONNALITIES
 
+
+var introText = document.createElement('article');
+var scoreChoice = document.createElement('article');
+var battleChoice = document.createElement('article');
+document.body.appendChild(introText);
+document.body.appendChild(scoreChoice);
+document.body.appendChild(battleChoice);
+
+// var scoreText = document.createElement('p');
+// var battleText = document.createElement('p');
+// document.body.appendChild(scoreText);
+// document.body.appendChild(battleText);
+
 introduction();
 
 function introduction() {
-    var introText = document.createElement('article');
-    var scoreChoice = document.createElement('article');
-    var scoreText = document.createElement('p');
-    var battleChoice = document.createElement('article');
-    var battleText = document.createElement('p');
-  
-    document.body.appendChild(introText);
-    document.body.appendChild(scoreChoice);
-    document.body.appendChild(battleChoice);
-    document.body.appendChild(scoreText);
-    document.body.appendChild(battleText);
-    
     introText.setAttribute('id', 'intro-text');
-    scoreChoice.setAttribute('id', 'score-side');
-    scoreText.setAttribute('id', 'score-text');
-    battleChoice.setAttribute('id', 'battle-side');
-    battleText.setAttribute('id', 'battle-text');
+    scoreChoice.setAttribute('id', 'score-choice');
+    battleChoice.setAttribute('id', 'battle-choice');
     
+    // scoreText.setAttribute('id', 'score-text');
+    // battleText.setAttribute('id', 'battle-text');
+
     scoreChoice.addEventListener('click', scoreInit);
     battleChoice.addEventListener('click', battleInit);
     
     introText.textContent = 'Pick a gameplay and enjoy!';
-    scoreChoice.textContent = 'SCORE';
-    battleChoice.textContent = 'BATTLE';
-    scoreText.textContent = 'Get points to your score each round. The highest score at the end of the battle wins!'
-    battleText.textContent = "Burn your opponent's extra cards each time you wine with a face card!"
+    scoreChoice.innerHTML = '<span>SCORE</span><br><br>Get points to your score each round. <br>The highest score at the end of the battle wins!';
+    battleChoice.innerHTML = "<span>BATTLE</span><br><br>Burn your opponent's extra cards <br> every time you win with a face card!'";
+
+    // scoreText.innerHTML = 'Get points to your score each round. <br>The highest score at the end of the battle wins!'
+    // battleText.innerHTML = "Burn your opponent's extra cards each time you wine with a face card!"
 }
 
-function scoreInit() {
+function removeIntroPage() {
+    introText.style.display = 'none';
+    scoreChoice.style.display = 'none';
+    battleChoice.style.dsplay = 'none';
+    scoreChoice.removeEventListener('click', scoreInit);
+    battleChoice.removeEventListener('click', battleInit);
+    document.querySelector('main').style.display = 'flex';
+}
+
+function scoreInit() { 
+    removeIntroPage();
+    createScoreDisplay();
+
+    // initialize and assign the decks
+    player1.deck = [];
+    player2.deck = [];
+    deckShuffling();
+    // initialize player's score
+    player1.score = 0;
+    player2.score = 0;
+    // initialize the board game
+    startingBoard();
+    deckButtons();
+    displayScores();
+    
     console.log('scoreInit working');
 }
 
 function battleInit() {
+    removeIntroPage();
+    createScoreDisplay();
+
+    // initialize and assign the decks
+    player1.deck = [];
+    player2.deck = [];
+    deckShuffling();
+    // initialize player's cards amount 
+    player1.cardsLeft = player1.deck.length;
+    player2.cardsLeft = player2.deck.length;
+    
     console.log('battleInit working');
 }
-// init();
+
+function createScoreDisplay() {
+    var score1 = document.createElement('p');
+    var score2 = document.createElement('p');
+    document.querySelector('#player1 > .scoreGame').appendChild(score1);
+    document.querySelector('#player2 > .scoreGame').appendChild(score2);
+
+    score1.textContent = 'SCORE';
+    score2.textContent = 'SCORE';
+}
+
+function createCardsLeftDisplay() {
+
+}
+
+function reset() {
+    player1.score ?(document.querySelector('#player1 > .scoreGame > p').remove(), document.querySelector('#player2 > .scoreGame > p').remove(), scoreInit()): player1.cardsLeft ? battleInit() : introduction();
+}
 
 // function rendering the message with the winner of the game
 function displayWinner() {
@@ -169,7 +225,6 @@ function player1Name() {
 function clickDeck1 () {
     player1Name();
     cardReset();
-
     // if message.textcontent is telling a round winner, reset the board game
     (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
     (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
@@ -192,7 +247,7 @@ function clickDeck1 () {
 function clickDeck2 () {
     player2Name();
     cardReset();
-    
+    // if message.textcontent is telling a round winner, reset the board game
     (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
     (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
     // disable the click on the deck
@@ -226,6 +281,7 @@ function deckShuffling() {
     });
 }
 
+
 function startingBoard() {
     message.textContent = 'enter your name';
     player1Card.setAttribute('class', 'card size');
@@ -241,23 +297,15 @@ function startingBoard() {
 
     player1Score.style.display = "none";
     player2Score.style.display = "none";
-
     cardReset();
 }
 
+
 // function initializing the board game
-function init() {
-    // initialize and assign the decks
-    player1.deck = [];
-    player2.deck = [];
-    deckShuffling();
-    // initialize player's score
-    player1.score = 0;
-    player2.score = 0;
-    // initialize the board game
-    startingBoard();
-    deckButtons();
-    displayScores();
-}
+// function init() {
 
+// }
 
+// function checking array's lengths
+
+// function winning 
