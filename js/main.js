@@ -57,7 +57,7 @@ const player2Score = document.querySelector("#player2 > .scoreGame")
 
 // input buttons
 document.querySelector('#nameBtn1').addEventListener('click', player1Name);
-document.querySelector('#nameBtn2').addEventListener('click', player2Name);
+// document.querySelector('#nameBtn2').addEventListener('click', player2Name);
 
 // reset button
 resetBtn.addEventListener('click', reset);    
@@ -180,7 +180,7 @@ function startingBoard() {
 
 // renders the played cards with loosing/winning styling
 function player2WinsStyle() {
-    roundWinner = player2.name;
+    roundWinner = 'Computer'; // change player2.name to 'computer'
     player1Card.style.opacity = "0.3";
     player2Card.style.borderColor = '#CF5247';
 }
@@ -196,7 +196,7 @@ function displayWinner() {
     message.style.fontSize = "14px";
     ((player1.score > player2.score) || (player2.deck.length === 0 && player1.deck.length !== 0)) ? 
     message.textContent = `${player1.name} won the war!`
-    : message.textContent = `${player2.name} won the war!`;
+    : message.textContent = `Computer won the war!`; // change player2.name to 'computer'
 
     player1Deck.removeEventListener('click', clickDeck1);
     player2Deck.removeEventListener('click', clickDeck2);
@@ -231,7 +231,7 @@ function battleInit() {
 // enable the clicks in the decks with the battle gameplay triggered when the event occurs
 function battleDeckButtons() {
     player1Deck.addEventListener('click', clickBattleDeck1);
-    player2Deck.addEventListener('click', clickBattleDeck2);   
+    // player2Deck.addEventListener('click', clickBattleDeck2);   
 }
 
 // renders updated game board and checks, when both cards are on field, who's the round winner
@@ -250,17 +250,19 @@ function clickBattleDeck1() {
     // render the card on the battlefield
     player1Card.setAttribute('class', `card size ${player1.deck[0]}`);
     
-    player2Card.getAttribute('class') !== 'card size' ? 
-    getBattleScore() : message.textContent = `${player2.name}'s turn`;
+    clickBattleDeck2();
+    getBattleScore();
+    // player2Card.getAttribute('class') !== 'card size' ? 
+    // getBattleScore() : message.textContent = `${player2.name}'s turn`;
 }
 function clickBattleDeck2() {
     player2Name();
-    cardReset();
+    // cardReset();
     // if message.textcontent is telling a round winner, reset the board game
-    (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
-    (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
+    // (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
+    // (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
     // disable the click on the deck
-    player2Deck.removeEventListener('click', clickBattleDeck2);
+    // player2Deck.removeEventListener('click', clickBattleDeck2);
     
     // assign to card1 the first parseInt value of deck1
     card2 = parseInt(player2.deck[0].slice(1));
@@ -268,8 +270,8 @@ function clickBattleDeck2() {
     // render the card on the battlefield
     player2Card.setAttribute('class', `card size ${player2.deck[0]}`);
     
-    player1Card.getAttribute('class') !== 'card size' ? 
-    getBattleScore() : message.textContent = `${player1.name}'s turn`;
+    // player1Card.getAttribute('class') !== 'card size' ? 
+    // getBattleScore() : message.textContent = `${player1.name}'s turn`;
 }
 
 // check the winner
@@ -338,7 +340,7 @@ function scoreInit() {
 // enables clicks on the decks with the score gameplay triggered when the event occurs
 function scoreDeckButtons () {
     player1Deck.addEventListener('click', clickDeck1);
-    player2Deck.addEventListener('click', clickDeck2);
+    // player2Deck.addEventListener('click', clickDeck2);
 }
 
 // renders updated game board and checks, when both cards are on field, who's the round winner
@@ -360,18 +362,20 @@ function clickDeck1() {
     // shift this value from player1.deck
     player1.deck.shift();
     
+    clickDeck2();
+    getScore();
     // check if player 2 played
-    player2Card.getAttribute('class') !== 'card size' ? 
-    getScore() : message.textContent = `${player2.name}'s turn`;
+    // player2Card.getAttribute('class') !== 'card size' ? 
+    // getScore() : message.textContent = `${player2.name}'s turn`;
 }
 function clickDeck2() {
     player2Name();
-    cardReset();
+    // cardReset();
     // if message.textcontent is telling a round winner, reset the board game
-    (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
-    (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
+    // (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
+    // (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
     // disable the click on the deck
-    player2Deck.removeEventListener('click', clickDeck2);
+    // player2Deck.removeEventListener('click', clickDeck2);
     
     // assign to card1 the first parseInt value of player1.deck
     card2 = parseInt(player2.deck[0].slice(1));
@@ -383,8 +387,8 @@ function clickDeck2() {
     player2.deck.shift();
     
     // check if player 1 played
-    player1Card.getAttribute('class') !== 'card size' ? 
-    getScore() : message.textContent = `${player1.name}'s turn`;    
+    // player1Card.getAttribute('class') !== 'card size' ? 
+    // getScore() : message.textContent = `${player1.name}'s turn`;    
 }
 
 // calculates the difference between card1 and card2
