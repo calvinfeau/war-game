@@ -69,9 +69,14 @@ menuBtn.addEventListener('click', function() {location.reload()});
 var introText = document.createElement('article');
 var scoreChoice = document.createElement('article');
 var battleChoice = document.createElement('article');
+
 document.body.appendChild(introText);
 document.body.appendChild(scoreChoice);
 document.body.appendChild(battleChoice);
+
+introduction();
+
+function introduction() {
 
 introText.setAttribute('id', 'intro-text');
 scoreChoice.setAttribute('id', 'score-choice');
@@ -85,7 +90,7 @@ scoreChoice.innerHTML = '<span>SCORE</span><br><br>Get points to your score each
 battleChoice.innerHTML = "<span>BATTLE</span><br><br>Burn your opponent's extra cards <br> every time you win with a face card!'";
 
 document.querySelector('nav').style.display = 'none';
-
+}
 // _____________________________________________________________
 // FUNCTIONNALITIES
 
@@ -95,8 +100,9 @@ document.querySelector('nav').style.display = 'none';
 // removes the home page and display the game page
 function removeIntroPage() {
     introText.style.display = 'none';
-    scoreChoice.style.display = 'none';
-    battleChoice.style.dsplay = 'none';
+    scoreChoice.setAttribute('style', 'display: none');
+    battleChoice.setAttribute('style', 'display: none');
+
     scoreChoice.removeEventListener('click', scoreInit);
     battleChoice.removeEventListener('click', battleInit);
     document.querySelector('main').style.display = 'flex';
@@ -186,6 +192,7 @@ function player1WinsStyle() {
 
 // renders the message with the winner of the game
 function displayWinner() {
+    console.log(player1.deck, player2.deck);
     message.style.fontSize = "14px";
     ((player1.score > player2.score) || (player2.deck.length === 0 && player1.deck.length !== 0)) ? 
     message.textContent = `${player1.name} won the war!`
@@ -201,7 +208,7 @@ function displayWinner() {
 // renders the message with the winner of the round
 function displayRoundWin () {
     (player1.deck.length === 0 || player2.deck.length === 0) ? 
-    displayWinner () : roundWinner === 'tie' ? 
+    displayWinner() : roundWinner === 'tie' ? 
     (message.textContent = `It's a ${roundWinner}!`, player1Card.style.opacity = 0.3, player2Card.style.opacity = 0.3) :
     message.textContent = `${roundWinner} won the battle!`;
 }
@@ -271,10 +278,7 @@ function getBattleScore() {
     player2.deck.push(player2.deck.shift());
     var roundScore = card1 - card2;
     roundScore === 0 ? roundWinner = 'tie' :
-    roundScore > 0 ? 
-    (player1WinsStyle(), player1WinsBattle()) 
-    : (player2WinsStyle(), player2WinsBattle());
-    console.log(player1.deck, player2.deck)
+    roundScore > 0 ? (player1WinsStyle(), player1WinsBattle()) : (player2WinsStyle(), player2WinsBattle());
     battleDeckButtons();
     displayCardsLeft();
 }
@@ -357,7 +361,7 @@ function clickDeck1() {
     player1.deck.shift();
     
     // check if player 2 played
-    player1.deck.length === player2.deck.length ? 
+    player2Card.getAttribute('class') !== 'card size' ? 
     getScore() : message.textContent = `${player2.name}'s turn`;
 }
 function clickDeck2() {
@@ -379,16 +383,17 @@ function clickDeck2() {
     player2.deck.shift();
     
     // check if player 1 played
-    player2.deck.length === player1.deck.length ? 
+    player1Card.getAttribute('class') !== 'card size' ? 
     getScore() : message.textContent = `${player1.name}'s turn`;    
 }
 
 // calculates the difference between card1 and card2
 function getScore() {
+    console.log('working');
     var roundScore = card1 - card2;
     roundScore === 0 ? roundWinner = 'tie' :
     roundScore > 0 ? 
-    (player1.score += roundScore, player1WinsBattle()) : (player2.score += (roundScore * -1), player2WinsStyle());
+    (player1.score += roundScore, player1WinsStyle()) : (player2.score += (roundScore * -1), player2WinsStyle());
     scoreDeckButtons();
     displayScores();
 }

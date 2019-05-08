@@ -37,14 +37,8 @@ header {
   text-align: center;
 }
 
-/* #score-text, #battle-text {
-  display: inline-block; 
-  height: 10vh;
-  width: 50vw;
-} */
-
 #score-choice {
-border-right: 1px solid #c3c3c3
+  border-right: 1px solid #c3c3c3;
 }
 
 #battle-choice {
@@ -54,7 +48,6 @@ border-right: 1px solid #c3c3c3
 span {
   font-size: 10vh;
 }
-/* SCORE VERSION SCREEN */
 
 main {
   display: none;
