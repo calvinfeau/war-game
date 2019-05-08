@@ -109,88 +109,10 @@ function removeIntroPage() {
     document.querySelector('main').style.display = 'flex';
 }
 
-function scoreInit() { 
-    removeIntroPage();
-    createScoreDisplay();
-
-    // initialize and assign the decks
-    player1.deck = [];
-    player2.deck = [];
-    deckShuffling();
-    // initialize player's score
-    player1.score = 0;
-    player2.score = 0;
-    // initialize the board game
-    startingBoard();
-    deckButtons();
-    displayScores();
-    
-    console.log('scoreInit working');
-}
-
-function battleInit() {
-    removeIntroPage();
-    createScoreDisplay();
-
-    // initialize and assign the decks
-    player1.deck = [];
-    player2.deck = [];
-    deckShuffling();
-    // initialize player's cards amount 
-    player1.cardsLeft = player1.deck.length;
-    player2.cardsLeft = player2.deck.length;
-    
-    console.log('battleInit working');
-}
-
-function createScoreDisplay() {
-    var score1 = document.createElement('p');
-    var score2 = document.createElement('p');
-    document.querySelector('#player1 > .scoreGame').appendChild(score1);
-    document.querySelector('#player2 > .scoreGame').appendChild(score2);
-
-    score1.textContent = 'SCORE';
-    score2.textContent = 'SCORE';
-}
-
-function createCardsLeftDisplay() {
-
-}
-
 function reset() {
-    player1.score ?(document.querySelector('#player1 > .scoreGame > p').remove(), document.querySelector('#player2 > .scoreGame > p').remove(), scoreInit()): player1.cardsLeft ? battleInit() : introduction();
-}
-
-// function rendering the message with the winner of the game
-function displayWinner() {
-    message.style.fontSize = "14px";
-    player1.score > player2.score ? 
-    message.textContent = `${player1.name} won the war!`
-    : message.textContent = `${player2.name} won the war!`;
-}
-
-// function rendering the message with the winner of the round
-function displayRoundWin () {
-    player1.deck.length === 0 ? displayWinner () : roundWinner === 'tie' ? (message.textContent = `It's a ${roundWinner}!`, player1Card.style.opacity = 0.3, player2Card.style.opacity = 0.3) :
-    message.textContent = `${roundWinner} won the battle!`;
-}
-
-// function keeping the score updated after each round
-function displayScores() {
-    player1.deck.length === 26 ? (player1.score = 0, player2.score = 0) : displayRoundWin();
-    document.querySelector('#player1Score').textContent = player1.score;
-    document.querySelector('#player2Score').textContent = player2.score;
-}
-
-// function calculating the difference between card1 and card2
-function getScore() {
-    var roundScore = card1 - card2;
-    roundScore === 0 ? roundWinner = 'tie' :
-    roundScore > 0 ? 
-    (player1.score += roundScore, roundWinner = player1.name, player2Card.style.opacity = "0.3", player1Card.style.borderColor = '#26306F') 
-    : (player2.score += (roundScore * -1), roundWinner = player2.name, player1Card.style.opacity = "0.3", player2Card.style.borderColor = '#CF5247');
-    deckButtons();
-    displayScores();
+    document.querySelector('#player1 > .scoreGame > p').textContent === 'SCORE' ? scoreInit(): document.querySelector('#player1 > .scoreGame > p').innerHTML === 'CARDS<br>LEFT' ? battleInit() : introduction();
+    document.querySelector('#player1 > .scoreGame > p').remove();
+    document.querySelector('#player2 > .scoreGame > p').remove();
 }
 
 // function reseting the played cards to empty
@@ -221,8 +143,222 @@ function player1Name() {
     player1Score.style.display = "flex";
 }
 
+// function shuffling the deck array and build both player1.deck and deck2
+function deckShuffling() {
+    currentIndex = deck.length;
+    var randomIndex, storingValue;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex --;
+
+        storingValue = deck[currentIndex];
+        deck[currentIndex] = deck[randomIndex];
+        deck[randomIndex] = storingValue;
+    }
+    player1.deck = deck.slice(0, deck.length / 2);
+    player2.deck = deck.slice(deck.length / 2);
+}
+
+function startingBoard() {
+    message.textContent = 'enter your name';
+    player1Card.setAttribute('class', 'card size');
+    player2Card.setAttribute('class', 'card size');
+    
+    player1Input.value = '';
+    player1Form.style.display = 'block';
+    player1Title.style.display = 'none';
+    
+    player2Input.value = '';
+    player2Form.style.display = 'block';
+    player2Title.style.display = 'none';
+    
+    player1Score.style.display = "none";
+    player2Score.style.display = "none";
+    cardReset();
+}
+
+// BATTLE VERSION
+
+function battleInit() {
+    removeIntroPage();
+    createCardsLeftDisplay();
+    
+    // initialize and assign the decks
+    player1.deck = [];
+    player2.deck = [];
+    deckShuffling();
+    
+    console.log(player1.deck, player2.deck);
+    startingBoard();
+    battleDeckButtons();
+}
+
+function battleDeckButtons() {
+    player1Deck.addEventListener('click', clickBattleDeck1);
+    player2Deck.addEventListener('click', clickBattleDeck2);   
+}
+
+function player2WinsStyle() {
+    roundWinner = player2.name;
+    player1Card.style.opacity = "0.3";
+    player2Card.style.borderColor = '#CF5247';
+}
+function player1WinsStyle() {
+    roundWinner = player1.name;
+    player2Card.style.opacity = "0.3";
+    player1Card.style.borderColor = '#26306F';
+}
+
+function player2WinsBattle() {
+    var cardLost = [];
+    card2 === 11 ? (cardLost = player1.deck.splice(0, 2), player2.deck.concat(cardLost)) :
+    card2 === 12 ? (cardLost = player1.deck.splice(0, 3), player2.deck.concat(cardLost)) :
+    card2 === 13 ? (cardLost = player1.deck.splice(0, 4), player2.deck.concat(cardLost)) : 
+    card2 === 14 ? (cardLost = player1.deck.splice(0, 5), player2.deck.concat(cardLost)) :
+    (cardLost = player1.deck.splice(0, 1), player2.deck.concat(cardLost));
+}
+function player1WinsBattle() {
+    var cardLost = [];
+    card1 === 11 ? (cardLost = player2.deck.splice(0, 2), player1.deck.concat(cardLost)) :
+    card1 === 12 ? (cardLost = player2.deck.splice(0, 3), player1.deck.concat(cardLost)) :
+    card1 === 13 ? (cardLost = player2.deck.splice(0, 4), player1.deck.concat(cardLost)) : 
+    card1 === 14 ? (cardLost = player2.deck.splice(0, 5), player1.deck.concat(cardLost)) :
+    (cardLost = player2.deck.splice(0, 1), player1.deck.concat(cardLost));
+}
+
+function getBattleScore() {   
+    player1.deck.push(player1.deck.shift());
+    player2.deck.push(player2.deck.shift());
+    var roundScore = card1 - card2;
+    roundScore === 0 ? roundWinner = 'tie' :
+    roundScore > 0 ? 
+    (player1WinsStyle(), player1WinsBattle()) 
+    : (player2WinsStyle(), player2WinsBattle());
+    console.log(player1.deck, player2.deck)
+    battleDeckButtons();
+    displayCardsLeft();
+
+}
+function clickBattleDeck1() {
+    player1Name();
+    cardReset();
+    // if message.textcontent is telling a round winner, reset the board game
+    (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
+    (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
+    // disable the click on the deck
+    player1Deck.removeEventListener('click', clickBattleDeck1);
+    
+    // assign to card1 the first parseInt value of deck1
+    card1 = parseInt(player1.deck[0].slice(1));
+    
+    // render the card on the battlefield
+    player1Card.setAttribute('class', `card size ${player1.deck[0]}`);
+
+    player2Card.getAttribute('class') !== 'card size' ? 
+    getBattleScore() : message.textContent = `${player2.name}'s turn`;
+}
+function clickBattleDeck2() {
+    player2Name();
+    cardReset();
+    // if message.textcontent is telling a round winner, reset the board game
+    (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
+    (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
+    // disable the click on the deck
+    player2Deck.removeEventListener('click', clickBattleDeck2);
+    
+    // assign to card1 the first parseInt value of deck1
+    card2 = parseInt(player2.deck[0].slice(1));
+    
+    // render the card on the battlefield
+    player2Card.setAttribute('class', `card size ${player2.deck[0]}`);
+
+    player1Card.getAttribute('class') !== 'card size' ? 
+    getBattleScore() : message.textContent = `${player1.name}'s turn`;
+}
+
+function createCardsLeftDisplay() {
+    var score1 = document.createElement('p');
+    var score2 = document.createElement('p');
+    player1Score.appendChild(score1);
+    player2Score.appendChild(score2);
+    score1.innerHTML = 'CARDS<br>LEFT';
+    score2.innerHTML = 'CARDS<br>LEFT'; 
+}
+
+function displayCardsLeft() {
+    document.querySelector('#player1Score').textContent = player1.deck.length;
+    document.querySelector('#player2Score').textContent = player2.deck.length;
+    displayRoundWin();
+}
+
+
+
+// SCORE VERSION
+
+function scoreInit() { 
+    removeIntroPage();
+    createScoreDisplay();
+
+    // initialize and assign the decks
+    player1.deck = [];
+    player2.deck = [];
+    deckShuffling();
+    console.log(player1.deck, player2.deck);
+    // initialize player's score
+    player1.score = 0;
+    player2.score = 0;
+    // initialize the board game
+    startingBoard();
+    scoreDeckButtons();
+    displayScores();
+    
+    console.log('scoreInit working');
+}
+
+function createScoreDisplay() {
+    var score1 = document.createElement('p');
+    var score2 = document.createElement('p');
+    player1Score.appendChild(score1);
+    player2Score.appendChild(score2);
+
+    score1.textContent = 'SCORE';
+    score2.textContent = 'SCORE';
+}
+
+// function rendering the message with the winner of the game
+function displayWinner() {
+    message.style.fontSize = "14px";
+    player1.score > player2.score ? 
+    message.textContent = `${player1.name} won the war!`
+    : message.textContent = `${player2.name} won the war!`;
+}
+
+// function rendering the message with the winner of the round
+function displayRoundWin () {
+    player1.deck.length === 0 ? displayWinner () : roundWinner === 'tie' ? (message.textContent = `It's a ${roundWinner}!`, player1Card.style.opacity = 0.3, player2Card.style.opacity = 0.3) :
+    message.textContent = `${roundWinner} won the battle!`;
+}
+
+// function keeping the score updated after each round
+function displayScores() {
+    player1.deck.length === 26 ? (player1.score = 0, player2.score = 0) : displayRoundWin();
+    document.querySelector('#player1Score').textContent = player1.score;
+    document.querySelector('#player2Score').textContent = player2.score;
+}
+
+// function calculating the difference between card1 and card2
+function getScore() {
+    var roundScore = card1 - card2;
+    roundScore === 0 ? roundWinner = 'tie' :
+    roundScore > 0 ? 
+    (player1.score += roundScore, roundWinner = player1.name, player2Card.style.opacity = "0.3", player1Card.style.borderColor = '#26306F') 
+    : (player2.score += (roundScore * -1), roundWinner = player2.name, player1Card.style.opacity = "0.3", player2Card.style.borderColor = '#CF5247');
+    scoreDeckButtons();
+    displayScores();
+}
+
 // function called on each click on a deck
-function clickDeck1 () {
+function clickDeck1() {
     player1Name();
     cardReset();
     // if message.textcontent is telling a round winner, reset the board game
@@ -244,7 +380,7 @@ function clickDeck1 () {
     player1.deck.length === player2.deck.length ? 
     getScore() : message.textContent = `${player2.name}'s turn`;
 }
-function clickDeck2 () {
+function clickDeck2() {
     player2Name();
     cardReset();
     // if message.textcontent is telling a round winner, reset the board game
@@ -268,44 +404,7 @@ function clickDeck2 () {
 }
 
 // function enabling clicks on the decks
-function deckButtons () {
+function scoreDeckButtons () {
     player1Deck.addEventListener('click', clickDeck1);
     player2Deck.addEventListener('click', clickDeck2);
 }
-
-// function shuffling the deck array and build both player1.deck and deck2
-function deckShuffling() {
-    deck.forEach( function(card, idx, deck) { 
-        var i = Math.floor(Math.random() * Math.floor(deck.length - 1));
-        (idx % 2 === 0) ? player1.deck.push(deck[i]) : player2.deck.push(deck[i]);
-    });
-}
-
-
-function startingBoard() {
-    message.textContent = 'enter your name';
-    player1Card.setAttribute('class', 'card size');
-    player2Card.setAttribute('class', 'card size');
-
-    player1Input.value = '';
-    player1Form.style.display = 'block';
-    player1Title.style.display = 'none';
-
-    player2Input.value = '';
-    player2Form.style.display = 'block';
-    player2Title.style.display = 'none';
-
-    player1Score.style.display = "none";
-    player2Score.style.display = "none";
-    cardReset();
-}
-
-
-// function initializing the board game
-// function init() {
-
-// }
-
-// function checking array's lengths
-
-// function winning 
