@@ -187,8 +187,8 @@ function battleInit() {
     player1.deck = [];
     player2.deck = [];
     deckShuffling();
-    
-    console.log(player1.deck, player2.deck);
+    console.log(player1.deck, player2.deck)
+
     startingBoard();
     battleDeckButtons();
 }
@@ -211,19 +211,19 @@ function player1WinsStyle() {
 
 function player2WinsBattle() {
     var cardLost = [];
-    card2 === 11 ? (cardLost = player1.deck.splice(0, 2), player2.deck.concat(cardLost)) :
-    card2 === 12 ? (cardLost = player1.deck.splice(0, 3), player2.deck.concat(cardLost)) :
-    card2 === 13 ? (cardLost = player1.deck.splice(0, 4), player2.deck.concat(cardLost)) : 
-    card2 === 14 ? (cardLost = player1.deck.splice(0, 5), player2.deck.concat(cardLost)) :
-    (cardLost = player1.deck.splice(0, 1), player2.deck.concat(cardLost));
+    card2 === 11 ? (cardLost = player1.deck.splice(0, 2), player2.deck = player2.deck.concat(cardLost)) :
+    card2 === 12 ? (cardLost = player1.deck.splice(0, 3), player2.deck = player2.deck.concat(cardLost)) :
+    card2 === 13 ? (cardLost = player1.deck.splice(0, 4), player2.deck = player2.deck.concat(cardLost)) : 
+    card2 === 14 ? (cardLost = player1.deck.splice(0, 5), player2.deck = player2.deck.concat(cardLost)) :
+    (cardLost = player1.deck.splice(0, 1), player2.deck = player2.deck.concat(cardLost));
 }
 function player1WinsBattle() {
     var cardLost = [];
-    card1 === 11 ? (cardLost = player2.deck.splice(0, 2), player1.deck.concat(cardLost)) :
-    card1 === 12 ? (cardLost = player2.deck.splice(0, 3), player1.deck.concat(cardLost)) :
-    card1 === 13 ? (cardLost = player2.deck.splice(0, 4), player1.deck.concat(cardLost)) : 
-    card1 === 14 ? (cardLost = player2.deck.splice(0, 5), player1.deck.concat(cardLost)) :
-    (cardLost = player2.deck.splice(0, 1), player1.deck.concat(cardLost));
+    card1 === 11 ? (cardLost = player2.deck.splice(0, 2), player1.deck = player1.deck.concat(cardLost)) :
+    card1 === 12 ? (cardLost = player2.deck.splice(0, 3), player1.deck = player1.deck.concat(cardLost)) :
+    card1 === 13 ? (cardLost = player2.deck.splice(0, 4), player1.deck = player1.deck.concat(cardLost)) : 
+    card1 === 14 ? (cardLost = player2.deck.splice(0, 5), player1.deck = player1.deck.concat(cardLost)) :
+    (cardLost = player2.deck.splice(0, 1), player1.deck = player1.deck.concat(cardLost));
 }
 
 function getBattleScore() {   
@@ -292,7 +292,6 @@ function displayCardsLeft() {
 }
 
 
-
 // SCORE VERSION
 
 function scoreInit() { 
@@ -324,20 +323,28 @@ function createScoreDisplay() {
     score1.textContent = 'SCORE';
     score2.textContent = 'SCORE';
 }
+// ______________________________________________________
+// displayWinner and displayRoundWin --> combine them for both game versions
 
 // function rendering the message with the winner of the game
 function displayWinner() {
     message.style.fontSize = "14px";
-    player1.score > player2.score ? 
+    player1.score > player2.score || (player2.deck.length === 0 && player1.deck.length !== 0) ? 
     message.textContent = `${player1.name} won the war!`
     : message.textContent = `${player2.name} won the war!`;
+
+
 }
 
 // function rendering the message with the winner of the round
 function displayRoundWin () {
-    player1.deck.length === 0 ? displayWinner () : roundWinner === 'tie' ? (message.textContent = `It's a ${roundWinner}!`, player1Card.style.opacity = 0.3, player2Card.style.opacity = 0.3) :
+    (player1.deck.length === 0 || player2.deck.length === 0) ? 
+    displayWinner () : roundWinner === 'tie' ? 
+    (message.textContent = `It's a ${roundWinner}!`, player1Card.style.opacity = 0.3, player2Card.style.opacity = 0.3) :
     message.textContent = `${roundWinner} won the battle!`;
 }
+// ______________________________________________________
+
 
 // function keeping the score updated after each round
 function displayScores() {
