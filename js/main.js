@@ -70,7 +70,7 @@ var battleChoice = document.createElement('article');
 introduction();
 
 function introduction() {
-    document.querySelector('header > h1').textContent = 'WAR GAMES';
+    document.querySelector('header > h1').textContent = 'WAR CARD GAMES';
 
     ((player1Score.getElementsByTagName('p').length > 0) && (player2Score.getElementsByTagName('p').length > 0)) ?
     (document.querySelector('#player1 > .scoreGame > p').remove(), document.querySelector('#player2 > .scoreGame > p').remove()) : -1;
