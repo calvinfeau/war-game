@@ -5,16 +5,20 @@ html, * {
 body {
   font-family: 'Quicksand', sans-serif;
   height: 100vh;
+  width: 100vw;
   margin: 0;
 }
 
+/* _______________________________________ */
 /* INTRO PAGE */
+
 #intro-text {
   display: block;
   height: 10vh;
   width: 100vw;
   padding: 3vh;
   text-align: center;
+  font-size: 3vh;
 }
 
 #score-choice, #battle-choice {
@@ -34,6 +38,10 @@ body {
 #battle-choice {
   border-left: 1px dashed black
 }
+
+span {
+  font-size: 10vh;
+}
 /* _______________________________________ */
 
 
@@ -43,13 +51,10 @@ header {
   justify-content: space-around;
   align-content: space-between;
   align-items: center;
-  height: 18vh;
+  height: 19vh;
   width: 100vw;
   font-size: 3vh;
-}
-
-span {
-  font-size: 10vh;
+  margin-top: 1vh;
 }
 
 main {
@@ -70,12 +75,12 @@ button {
 }
 
 h1 {
-  margin-top: 2vh;
   font-size: 5vh;
 }
 
 nav {
   display: none;
+  height: 14vh;
   width: 90vw;
   justify-content: space-between;
 }
@@ -112,7 +117,9 @@ section {
 }
 
 .card.size {
-  font-size: 30px;
+  font-size: 6vh;
+  height: 25vh;
+  width: 16vw;
 }
 
 #message {
@@ -127,12 +134,17 @@ section {
   border-bottom: 1px solid white;
   text-align: center;
   color: #ffffff;
+  font-size: 2vh;
+}
+
+h2 {
+  font-size: 2vh;
 }
 
 p {
   font-style: italic;
   text-align: center;
-  font-size: 10px;
+  font-size: 2vh;
 }
 
 .scoreGame {
@@ -183,48 +195,113 @@ p {
   border-right: 0.5vw solid white;
   background-color: #1226aa;
 }
+
 #info > #player2, #battlefield > #player2 {
   border-left: 0.5vw solid white;
   background-color: #ff4713;
 }
 
+
+@media only screen and (max-width: 1024px) {
+
+  span {
+    font-size: 7vh;
+  }
+  .card.size {
+    height: 20vh;
+    width: 18vw;    
+  }
+}
+
+
 @media only screen and (max-width: 768px) {
 
-  header {
+  /* _______________________________________ */
+  /* INTRO PAGE */
+  #intro-text {
+    display: block;
     height: 10vh;
+    width: 100vw;
+    padding: 3vh;
+    text-align: center;
+  }
+  
+  #score-choice, #battle-choice {
+    display: inline-flex;
+    flex-direction: column;
+    height: 75vh;
+    width: 50vw;
+    padding: 20vh 5vw;
+    font-size: 2vh;
+    text-align: center;
+  }
+  
+  #score-choice {
+    border-right: 1px dashed black;
+  }
+  
+  #battle-choice {
+    border-left: 1px dashed black;
+  }
+
+  span {
+    font-size: 5vh;
+  }
+  /* _______________________________________ */
+  
+  header {
+    height: 19vh;
     padding: 0;
     font-size: 10px;
+    margin-top: 1vh;
+  }
+
+  h1 {
+    font-size: 5vh;
+    margin: 0;
+  }
+
+  nav {
+    height: 15vh;
   }
 
   main {
-    height: 90vh;
+    display: none;
     flex-direction: column;
-    justify-content: space-between;
-  }
-
-  main > section {
-    display: flex;
-    flex-direction: row;
-    height: 30vh;
-    width: 100vw;;
     justify-content: space-around;
-    align-content: center;
+    align-items: center;
+    align-content: space-around;
+    height: 80vh;
   }
 
   .card.size {
-    font-size: 25px;
-  }
+    height: 18vh;
+    width: 24vw;    
+      }
 
   .score {
     padding: 0;
   }
 
-  #player2 {
-    flex-direction: row-reverse;
+  #info, #info > #player1, #info > #player2  {
+    height: 30vh;
   }
 
-  #battlefield {
-    justify-content: space-between;
+  #battlefield{
+    height: 50vh;
+  }
+  
+  #battlefield > #player2 {
+    flex-direction: column;
+  }
+  
+  #battlefield > #player1 {
+    flex-direction: column-reverse;
+  }
+  
+  #battlefield > #player1, #battlefield > #player2 {
+    height: 50vh;
+    padding: 2%;
   }
 }
   

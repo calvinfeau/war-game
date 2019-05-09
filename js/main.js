@@ -36,11 +36,9 @@ const message = document.querySelector('.menu > #message');
 
 // player's inputs and titles
 const player1Input = document.querySelector('#input1');
-// const player2Input = document.querySelector('#input2');
 const player1Title = document.querySelector('#info > #player1 > div.scoreGame > h2');
 const player2Title = document.querySelector('#info > #player2 > div.scoreGame > h2');
 const player1Form = document.querySelector('#info > #player1 > form');
-// const player2Form = document.querySelector('#player2 > form');
 
 // player's cards
 const player1Deck = document.querySelector("#battlefield > #player1 > div.card.back-blue");
@@ -57,7 +55,6 @@ const player2Score = document.querySelector("#info > #player2 > .scoreGame")
 
 // input buttons
 document.querySelector('#nameBtn1').addEventListener('click', player1Name);
-// document.querySelector('#nameBtn2').addEventListener('click', player2Name);
 
 // reset button
 resetBtn.addEventListener('click', reset);    
@@ -76,8 +73,7 @@ function introduction() {
     document.querySelector('header > h1').textContent = 'WAR GAMES';
 
     ((player1Score.getElementsByTagName('p').length > 0) && (player2Score.getElementsByTagName('p').length > 0)) ?
-    (document.querySelector('#player1 > .scoreGame > p').remove(), document.querySelector('#player2 > .scoreGame > p').remove())
-    : -1;
+    (document.querySelector('#player1 > .scoreGame > p').remove(), document.querySelector('#player2 > .scoreGame > p').remove()) : -1;
     document.querySelector('main').setAttribute('style', 'display: none');
     document.querySelector('nav').setAttribute('style', 'display: none');
 
@@ -100,6 +96,7 @@ function introduction() {
     scoreChoice.innerHTML = '<span>SCORE</span><br><br>Get points to your score each round. <br>The highest score at the end of the battle wins!';
     battleChoice.innerHTML = "<span>BATTLE</span><br><br>Burn your opponent's extra cards <br> every time you win with a face card!";
 }
+
 // _____________________________________________________________
 // FUNCTIONNALITIES
 
@@ -120,8 +117,8 @@ function removeIntroPage() {
 
 // resets the game page
 function reset() {
-    document.querySelector('#player1 > .scoreGame > p').textContent === 'SCORE' ? scoreInit(): 
-    document.querySelector('#player1 > .scoreGame > p').innerHTML === 'CARDS<br>LEFT' ? battleInit() : introduction();
+    document.querySelector('#player1 > .scoreGame > p').textContent === 'Score' ? scoreInit(): 
+    document.querySelector('#player1 > .scoreGame > p').innerHTML === 'Cards<br>Left' ? battleInit() : introduction();
     document.querySelector('#player1 > .scoreGame > p').remove();
     document.querySelector('#player2 > .scoreGame > p').remove();
 }
@@ -137,10 +134,8 @@ function cardReset() {
 // renders the name input
 function player2Name() {
     event.preventDefault();
-    // player2Input.value !== '' ? player2.name = player2Input.value : player2.name;
     player2Title.textContent = computer.name;
     player2Title.style.display = 'block';
-    // player2Form.style.display = 'none';
     player2Score.style.display = "flex";
 }
 function player1Name() {
@@ -159,7 +154,6 @@ function deckShuffling() {
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex --;
-
         storingValue = deck[currentIndex];
         deck[currentIndex] = deck[randomIndex];
         deck[randomIndex] = storingValue;
@@ -178,8 +172,6 @@ function startingBoard() {
     player1Form.style.display = 'block';
     player1Title.style.display = 'none';
     
-    // player2Input.value = '';
-    // player2Form.style.display = 'block';
     player2Title.style.display = 'none';
     player1Score.style.display = "none";
     player2Score.style.display = "none";
@@ -188,7 +180,7 @@ function startingBoard() {
 
 // renders the played cards with loosing/winning styling
 function player2WinsStyle() {
-    roundWinner = 'Computer'; // change player2.name to 'computer'
+    roundWinner = 'Computer';
     player1Card.style.opacity = "0.3";
     player2Card.style.borderColor = '#CF5247';
 }
@@ -200,16 +192,12 @@ function player1WinsStyle() {
 
 // renders the message with the winner of the game
 function displayWinner() {
-    message.style.fontSize = "14px";
     ((player1.score > computer.score) || (computer.deck.length === 0 && player1.deck.length !== 0)) ? 
     message.textContent = `${player1.name} won the war!`
-    : message.textContent = `Computer won the war!`; // change player2.name to 'computer'
+    : message.textContent = `Computer won the war!`;
 
     player1Deck.removeEventListener('click', clickDeck1);
-    // player2Deck.removeEventListener('click', clickDeck2);
-
     player1Deck.removeEventListener('click', clickBattleDeck1);
-    // player2Deck.removeEventListener('click', clickBattleDeck2);
 }
 
 // renders the message with the winner of the round
@@ -223,7 +211,6 @@ function displayRoundWin () {
 
 // BATTLE VERSION FUNCTIONS
 
-// launch the battle version
 function battleInit() {
     removeIntroPage();
     document.querySelector('header > h1').textContent = 'BATTLE';
@@ -236,22 +223,21 @@ function battleInit() {
     displayCardsLeft();
 }
 
-// enable the clicks in the decks with the battle gameplay triggered when the event occurs
 function battleDeckButtons() {
     player1Deck.addEventListener('click', clickBattleDeck1);
-    // player2Deck.addEventListener('click', clickBattleDeck2);   
 }
 
-// renders updated game board and checks, when both cards are on field, who's the round winner
+// renders updated game board and checks who's the round winner
 function clickBattleDeck1() {
     player1Name();
     player2Name();
     cardReset();
+
     // if message.textcontent is telling a round winner, reset the board game
     (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
     (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
-    // disable the click on the deck
-    player1Deck.removeEventListener('click', clickBattleDeck1);
+    
+    player1Deck.removeEventListener('click', clickBattleDeck1); // disable the click on the deck
     
     // assign to card1 the first parseInt value of deck1
     card1 = parseInt(player1.deck[0].slice(1));
@@ -260,27 +246,9 @@ function clickBattleDeck1() {
     // render the card on the battlefield
     player1Card.setAttribute('class', `card size ${player1.deck[0]}`);
     player2Card.setAttribute('class', `card size ${computer.deck[0]}`);
-    
-    // clickBattleDeck2();
+
     getBattleScore();
-    // player2Card.getAttribute('class') !== 'card size' ? 
-    // getBattleScore() : message.textContent = `${player2.name}'s turn`;
 }
-// function clickBattleDeck2() {
-    // cardReset();
-    // if message.textcontent is telling a round winner, reset the board game
-    // (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
-    // (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
-    // disable the click on the deck
-    // player2Deck.removeEventListener('click', clickBattleDeck2);
-    
-    // assign to card1 the first parseInt value of deck1
-    
-    // render the card on the battlefield
-    
-    // player1Card.getAttribute('class') !== 'card size' ? 
-    // getBattleScore() : message.textContent = `${player1.name}'s turn`;
-// }
 
 // check the winner
 function getBattleScore() {   
@@ -317,8 +285,8 @@ function createCardsLeftDisplay() {
     var score2 = document.createElement('p');
     player1Score.appendChild(score1);
     player2Score.appendChild(score2);
-    score1.innerHTML = 'CARDS<br>LEFT';
-    score2.innerHTML = 'CARDS<br>LEFT';
+    score1.innerHTML = 'Cards<br>Left';
+    score2.innerHTML = 'Cards<br>Left';
 }
 
 // display updated amount of cards left for each player
@@ -331,7 +299,6 @@ function displayCardsLeft() {
 
 // SCORE VERSION FUNCTIONS
 
-// launch the score version
 function scoreInit() { 
     removeIntroPage();
     createScoreDisplay();
@@ -349,7 +316,6 @@ function scoreInit() {
 // enables clicks on the decks with the score gameplay triggered when the event occurs
 function scoreDeckButtons () {
     player1Deck.addEventListener('click', clickDeck1);
-    // player2Deck.addEventListener('click', clickDeck2);
 }
 
 // renders updated game board and checks, when both cards are on field, who's the round winner
@@ -357,10 +323,10 @@ function clickDeck1() {
     player1Name();
     player2Name();
     cardReset();
-    // if message.textcontent is telling a round winner, reset the board game
+
     (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
     (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
-    // disable the click on the deck
+
     player1Deck.removeEventListener('click', clickDeck1);
     
     // assign to card1 the first parseInt value of deck1
@@ -374,30 +340,8 @@ function clickDeck1() {
     // shift this value from player1.deck
     player1.deck.shift();
     computer.deck.shift();
-    
-    clickDeck2();
+
     getScore();
-    // check if player 2 played
-    // player2Card.getAttribute('class') !== 'card size' ? 
-    // getScore() : message.textContent = `${player2.name}'s turn`;
-}
-function clickDeck2() {
-    // cardReset();
-    // if message.textcontent is telling a round winner, reset the board game
-    // (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
-    // (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
-    // disable the click on the deck
-    // player2Deck.removeEventListener('click', clickDeck2);
-    
-    // assign to card1 the first parseInt value of player1.deck
-    
-    // render the card on the battlefield
-    
-    // shift this value from player2.deck
-    
-    // check if player 1 played
-    // player1Card.getAttribute('class') !== 'card size' ? 
-    // getScore() : message.textContent = `${player1.name}'s turn`;    
 }
 
 // calculates the difference between card1 and card2
@@ -417,8 +361,8 @@ function createScoreDisplay() {
     player1Score.appendChild(score1);
     player2Score.appendChild(score2);
 
-    score1.textContent = 'SCORE';
-    score2.textContent = 'SCORE';
+    score1.textContent = 'Score';
+    score2.textContent = 'Score';
 }
 
 // renders updated scores after each round
