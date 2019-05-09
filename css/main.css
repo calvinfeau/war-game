@@ -1,12 +1,41 @@
 html, * {
   box-sizing: border-box;
 }
-
+  
 body {
-  font-family: 'Wendy One', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   height: 100vh;
   margin: 0;
 }
+
+/* INTRO PAGE */
+#intro-text {
+  display: block;
+  height: 10vh;
+  width: 100vw;
+  padding: 3vh;
+  text-align: center;
+}
+
+#score-choice, #battle-choice {
+  display: inline-flex;
+  flex-direction: column;
+  height: 70vh;
+  width: 50vw;
+  padding: 20vh 5vw;
+  font-size: 2vh;
+  text-align: center;
+}
+
+#score-choice {
+  border-right: 1px dashed black
+}
+
+#battle-choice {
+  border-left: 1px dashed black
+}
+/* _______________________________________ */
+
 
 header {
   display: flex;
@@ -14,35 +43,9 @@ header {
   justify-content: space-around;
   align-content: space-between;
   align-items: center;
-  height: 15vh;
+  height: 18vh;
   width: 100vw;
-  font-size: 25px;
-}
-
-#intro-text {
-  display: block;
-  height: 10vh;
-  width: 100vw;
-  padding: 3vh 0;
-  text-align: center;
-}
-
-#score-choice, #battle-choice {
-  display: inline-block;
-  height: 75vh;
-  width: 50vw;
-  margin: 0px 0;
-  padding: 30vh 0vw;
-  font-size: 2vh;
-  text-align: center;
-}
-
-#score-choice {
-  border-right: 1px solid #c3c3c3;
-}
-
-#battle-choice {
-  border-left: 1px solid #c3c3c3;
+  font-size: 3vh;
 }
 
 span {
@@ -51,70 +54,79 @@ span {
 
 main {
   display: none;
-  justify-content: space-around;
-  align-items: center;
-  align-content: space-around;
-  height: 85vh;
-}
-
-
-button {
-  font-family: 'Wendy One', sans-serif;
-  border: none;
-  background: none;
-  font-size: 15px;
-}
-
-h1 {
-  margin: 5px 0;
-}
-
-nav {
-  width: 94vw;
-  display: flex;
-  justify-content: space-between;
-  margin: 5px;
-}
-
-
-#nameBtn1, #nameBtn2 {
-  background-color: #ffffff;
-  border: none;
-}
-
-#input1, #input2 {
-  border-left: 0;
-  border-right: 0;
-  border-top: 0;
-  border-bottom: 1 solid #c3c3c3;
-}
-
-section {
-  height: 85vh;
-  width: 25%;
-  display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  align-content: space-around;
+  height: 80vh;
 }
 
-#player2 {
-  flex-direction: column-reverse;
+button {
+  border: none;
+  background: none;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+  font-size: 3vh;
 }
+
+h1 {
+  margin-top: 2vh;
+  font-size: 5vh;
+}
+
+nav {
+  display: none;
+  width: 90vw;
+  justify-content: space-between;
+}
+
+#reset {
+  color: #ff4713;
+}
+
+#home {
+  color: #1226aa;
+}
+
+#nameBtn1 {
+  background-color: #1226aa;
+  color: #ffffff;
+  border: none;
+}
+
+#input1 {
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  border-bottom: 1px solid white;
+  color: #ffffff;
+  font-style: italic;
+  background-color: #1226aa;
+}
+
+section {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .card.size {
-  font-size: 35px;
+  font-size: 30px;
 }
-
 
 #message {
+  margin: none;
   text-align: center;
+  font-size: 3vh;
 }
 
 .score {
   width: 5vmin;
   padding: 4px;
-  border-bottom: 1px solid #c3c3c3;
+  border-bottom: 1px solid white;
   text-align: center;
+  color: #ffffff;
 }
 
 p {
@@ -131,10 +143,49 @@ p {
   align-items: center;
 }
 
+#info {
+  display: flex;
+  height: 25vh;
+  justify-content: center;
+  align-content: center;
+  border-top: 1vh solid white;
+  color: #ffffff;
+}
+
+#info > #player1, #info > #player2 {
+  display: flex;
+  height: 25vh;
+  width: 50vw;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+}
+
 #battlefield{
   display: flex;
+  height: 55vh;
   justify-content: space-around;
-  align-content: space-around;
+  align-items: space-around;
+  align-content: center;
+  border-bottom: 1vh solid white;
+}
+
+#battlefield > #player1, #battlefield > #player2 {
+  display: flex;
+  width: 50%;
+  height: 55vh;
+  padding: 5%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#info > #player1, #battlefield > #player1 {
+  border-right: 0.5vw solid white;
+  background-color: #1226aa;
+}
+#info > #player2, #battlefield > #player2 {
+  border-left: 0.5vw solid white;
+  background-color: #ff4713;
 }
 
 @media only screen and (max-width: 768px) {
@@ -155,7 +206,7 @@ p {
     display: flex;
     flex-direction: row;
     height: 30vh;
-    width: 95vw;
+    width: 100vw;;
     justify-content: space-around;
     align-content: center;
   }
@@ -176,3 +227,4 @@ p {
     justify-content: space-between;
   }
 }
+  
