@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>War Game</title>
+    <title>War Card Game</title>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/cardstarter.css">
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
@@ -20,12 +20,12 @@
 
     <main>
         <section id="battlefield">
-            <div id="player1">
+            <div id="player-field">
                 <div class="card size back-blue"></div>
                 <div class="card size" id="card1"></div>
             </div>
             
-            <div id="player2">
+            <div id="computer-field">
                 <div class="card size" id="card2"></div>
                 <div class="card size back-red"></div>
             </div>
@@ -33,18 +33,18 @@
         
         
         <section id="info">
-            <div id="player1">
-                <form><input id= "input1" type="text" placeholder="name"><input id='nameBtn1' type="submit" value="✓"></form>
-                <div class="scoreGame">
+            <div id="player-info">
+                <form><input id= "input" type="text" placeholder="name"><input id='name-btn' type="submit" value="✓"></form>
+                <div class="score-game">
                     <h2></h2>
-                    <div class="score" id="player1Score"></div>
+                    <div class="score" id="player-score"></div>
                 </div>
             </div>
             
-            <div id="player2">
-                <div class="scoreGame">
+            <div id="computer-info">
+                <div class="score-game">
                     <h2></h2>
-                    <div class="score" id="player2Score"></div>
+                    <div class="score" id="computer-score"></div>
                 </div>
             </div>
         </section>

@@ -9,7 +9,7 @@ body {
   margin: 0;
 }
 
-/* _______________________________________ */
+/* _____________________ */
 /* INTRO PAGE */
 
 #intro-text {
@@ -19,6 +19,8 @@ body {
   padding: 3vh;
   text-align: center;
   font-size: 3vh;
+  color: #ffffff;
+  background-color: #ff4713;
 }
 
 #score-choice, #battle-choice {
@@ -32,18 +34,19 @@ body {
 }
 
 #score-choice {
-  border-right: 1px dashed black
+  color: #ff4713;
 }
 
 #battle-choice {
-  border-left: 1px dashed black
+  color: #1226aa;
 }
 
 span {
   font-size: 10vh;
 }
-/* _______________________________________ */
 
+/* _____________________ */
+/* HEADER PART */
 
 header {
   display: flex;
@@ -55,7 +58,46 @@ header {
   width: 100vw;
   font-size: 3vh;
   margin-top: 1vh;
+  background-color: #1226aa;
+  color: #ffffff;
 }
+
+h1 {
+  font-size: 5vh;
+}
+
+nav {
+  display: none;
+  height: 14vh;
+  width: 100vw;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  background-color: #ff4713;
+}
+
+button {
+  border: none;
+  background: none;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+  font-size: 3vh;
+  color: #ffffff;
+}
+
+#message {
+  margin: none;
+  font-size: 3vh;
+}
+
+p {
+  font-style: italic;
+  text-align: center;
+  font-size: 2vh;
+}
+
+/* _____________________ */
+/* GAME PART */
 
 main {
   display: none;
@@ -66,40 +108,20 @@ main {
   height: 80vh;
 }
 
-button {
-  border: none;
-  background: none;
-  font-family: 'Quicksand', sans-serif;
-  font-weight: bold;
-  font-size: 3vh;
+section {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
 }
 
-h1 {
-  font-size: 5vh;
-}
-
-nav {
-  display: none;
-  height: 14vh;
-  width: 90vw;
-  justify-content: space-between;
-}
-
-#reset {
-  color: #ff4713;
-}
-
-#home {
-  color: #1226aa;
-}
-
-#nameBtn1 {
+#name-btn {
   background-color: #1226aa;
   color: #ffffff;
   border: none;
 }
 
-#input1 {
+#input {
   border-left: 0;
   border-right: 0;
   border-top: 0;
@@ -109,23 +131,14 @@ nav {
   background-color: #1226aa;
 }
 
-section {
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  align-items: center;
-}
-
 .card.size {
   font-size: 6vh;
   height: 25vh;
   width: 14vw;
 }
 
-#message {
-  margin: none;
-  text-align: center;
-  font-size: 3vh;
+h2 {
+  font-size: 2vh;
 }
 
 .score {
@@ -137,17 +150,7 @@ section {
   font-size: 2vh;
 }
 
-h2 {
-  font-size: 2vh;
-}
-
-p {
-  font-style: italic;
-  text-align: center;
-  font-size: 2vh;
-}
-
-.scoreGame {
+.score-game {
   display: none;
   flex-direction: column;
   justify-content: space-around;
@@ -160,11 +163,10 @@ p {
   height: 25vh;
   justify-content: center;
   align-content: center;
-  border-top: 1vh solid white;
   color: #ffffff;
 }
 
-#info > #player1, #info > #player2 {
+#info > #player-info, #info > #computer-info {
   display: flex;
   height: 25vh;
   width: 50vw;
@@ -173,16 +175,15 @@ p {
   align-content: center;
 }
 
-#battlefield{
+#battlefield {
   display: flex;
   height: 55vh;
   justify-content: space-around;
   align-items: space-around;
   align-content: center;
-  border-bottom: 1vh solid white;
 }
 
-#battlefield > #player1, #battlefield > #player2 {
+#battlefield > #player-field, #battlefield > #computer-field {
   display: flex;
   width: 50%;
   height: 55vh;
@@ -191,33 +192,31 @@ p {
   align-items: center;
 }
 
-#info > #player1, #battlefield > #player1 {
-  border-right: 0.5vw solid white;
+#info > #player-info {
   background-color: #1226aa;
 }
 
-#info > #player2, #battlefield > #player2 {
-  border-left: 0.5vw solid white;
+#info > #computer-info {
   background-color: #ff4713;
 }
-
 
 @media only screen and (max-width: 1024px) {
 
   span {
     font-size: 7vh;
   }
+
   .card.size {
     height: 20vh;
     width: 18vw;    
   }
 }
 
-
 @media only screen and (max-width: 768px) {
 
-  /* _______________________________________ */
+  /* _____________________ */
   /* INTRO PAGE */
+
   #intro-text {
     display: block;
     height: 10vh;
@@ -235,24 +234,17 @@ p {
     font-size: 2vh;
     text-align: center;
   }
-  
-  #score-choice {
-    border-right: 1px dashed black;
-  }
-  
-  #battle-choice {
-    border-left: 1px dashed black;
-  }
 
   span {
     font-size: 5vh;
   }
-  /* _______________________________________ */
-  
+
+  /* _____________________ */
+  /* HEADER PART */
+
   header {
     height: 19vh;
     padding: 0;
-    font-size: 10px;
     margin-top: 1vh;
   }
 
@@ -262,8 +254,15 @@ p {
   }
 
   nav {
-    height: 15vh;
+    height: 13vh;
   }
+
+  #message, button {
+    font-size: 2vh;
+  }
+
+  /* _____________________ */
+  /* GAME PART */
 
   main {
     display: none;
@@ -277,13 +276,13 @@ p {
   .card.size {
     height: 18vh;
     width: 24vw;    
-      }
+  }
 
   .score {
     padding: 0;
   }
 
-  #info, #info > #player1, #info > #player2  {
+  #info, #info > #player-info, #info > #computer-info {
     height: 30vh;
   }
 
@@ -291,17 +290,16 @@ p {
     height: 50vh;
   }
   
-  #battlefield > #player2 {
+  #battlefield > #computer-field {
     flex-direction: column;
   }
   
-  #battlefield > #player1 {
+  #battlefield > #player-field {
     flex-direction: column-reverse;
   }
   
-  #battlefield > #player1, #battlefield > #player2 {
+  #battlefield > #player-field, #battlefield > #computer-field {
     height: 50vh;
     padding: 2%;
   }
 }
-  

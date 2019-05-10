@@ -15,7 +15,7 @@ const deck = [
 // STATE VARIABLES 
 
 // create the 2 player's object
-var player1 = {};
+var player = {};
 var computer = {
     name: 'Computer'
 };
@@ -33,36 +33,33 @@ const menuBtn = document.querySelector('.menu > #home');
 const message = document.querySelector('.menu > #message');
 
 // player's inputs and titles
-const player1Input = document.querySelector('#input1');
-const player1Title = document.querySelector('#info > #player1 > div.scoreGame > h2');
-const player2Title = document.querySelector('#info > #player2 > div.scoreGame > h2');
-const player1Form = document.querySelector('#info > #player1 > form');
+const playerInput = document.querySelector('#input');
+const playerTitle = document.querySelector('#info > #player-info > div.score-game > h2');
+const computerTitle = document.querySelector('#info > #computer-info > div.score-game > h2');
+const playerForm = document.querySelector('#info > #player-info > form');
 
 // player's cards
-const player1Deck = document.querySelector("#battlefield > #player1 > div.card.back-blue");
-const player2Deck = document.querySelector("#battlefield > #player2 > div.card.back-red");
-const player1Card = document.querySelector('#battlefield > #player1 > #card1');
-const player2Card = document.querySelector('#battlefield > #player2 > #card2');
+const playerDeck = document.querySelector("#battlefield > #player-field > div.card.back-blue");
+const computerDeck = document.querySelector("#battlefield > #computer-field> div.card.back-red");
+const playerCard = document.querySelector('#battlefield > #player-field > #card1');
+const computerCard = document.querySelector('#battlefield > #computer-field > #card2');
 
 //player's score
-const player1Score = document.querySelector("#info > #player1 > .scoreGame")
-const player2Score = document.querySelector("#info > #player2 > .scoreGame")
+const playerScore = document.querySelector("#info > #player-info > .score-game");
+const computerScore = document.querySelector("#info > #computer-info > .score-game");
 
 // winning / loosing audio
 var winMusic = document.createElement('audio');
-winMusic.setAttribute('src', 'audio/yeehaw.mp3');
-winMusic.autoplay = true;
 var looseMusic = document.createElement('audio');
+winMusic.setAttribute('src', 'audio/yeehaw.mp3');
 looseMusic.setAttribute('src', 'audio/boo3.mp3');
-looseMusic.autoplay = true;
+winMusic.setAttribute('autoplay', 'true');
+looseMusic.setAttribute('autoplay', 'true');
 
 // _____________________________________________________________
 // EVENT LISTENERS
 
-// input buttons
-document.querySelector('#nameBtn1').addEventListener('click', player1Name);
-
-// reset button
+document.querySelector('#name-btn').addEventListener('click', playerName);
 resetBtn.addEventListener('click', reset);    
 menuBtn.addEventListener('click', introduction);
 
@@ -77,9 +74,10 @@ introduction();
 
 function introduction() {
     document.querySelector('header > h1').textContent = 'WAR CARD GAMES';
+    document.querySelector('header').setAttribute('style', 'background-color: #1226aa');
 
-    ((player1Score.getElementsByTagName('p').length > 0) && (player2Score.getElementsByTagName('p').length > 0)) ?
-    (document.querySelector('#player1 > .scoreGame > p').remove(), document.querySelector('#player2 > .scoreGame > p').remove()) : -1;
+    ((playerScore.getElementsByTagName('p').length > 0) && (computerScore.getElementsByTagName('p').length > 0)) ?
+    (document.querySelector('#player-info > .score-game > p').remove(), document.querySelector('#computer-info > .score-game > p').remove()) : -1;
     document.querySelector('main').setAttribute('style', 'display: none');
     document.querySelector('nav').setAttribute('style', 'display: none');
 
@@ -123,37 +121,37 @@ function removeIntroPage() {
 
 // resets the game page
 function reset() {
-    document.querySelector('#player1 > .scoreGame > p').textContent === 'Score' ? scoreInit(): 
-    document.querySelector('#player1 > .scoreGame > p').innerHTML === 'Cards<br>Left' ? battleInit() : introduction();
-    document.querySelector('#player1 > .scoreGame > p').remove();
-    document.querySelector('#player2 > .scoreGame > p').remove();
+    document.querySelector('#player-info > .score-game > p').textContent === 'Score' ? scoreInit(): 
+    document.querySelector('#player-info > .score-game > p').innerHTML === 'Cards<br>Left' ? battleInit() : introduction();
+    document.querySelector('#player-info > .score-game > p').remove();
+    document.querySelector('#computer-info > .score-game > p').remove();
 }
 
 // resets the played cards to empty
 function cardReset() {
-    player1Card.style.opacity = "1";
-    player1Card.style.borderColor = '#c3c3c3';
-    player2Card.style.opacity = "1";
-    player2Card.style.borderColor = '#c3c3c3';
+    playerCard.style.opacity = '1';
+    playerCard.style.borderColor = '#c3c3c3';
+    computerCard.style.opacity = '1';
+    computerCard.style.borderColor = '#c3c3c3';
 }
 
 // renders the name input
-function player2Name() {
+function computerName() {
     event.preventDefault();
-    player2Title.textContent = computer.name;
-    player2Title.style.display = 'block';
-    player2Score.style.display = "flex";
+    computerTitle.textContent = computer.name;
+    computerTitle.style.display = 'block';
+    computerScore.style.display = 'flex';
 }
-function player1Name() {
+function playerName() {
     event.preventDefault();
-    player1Input.value !== '' ? player1.name = player1Input.value : player1.name;
-    player1Title.textContent = player1.name;
-    player1Title.style.display = 'block';
-    player1Form.style.display = 'none';
-    player1Score.style.display = "flex";
+    playerInput.value !== '' ? player.name = playerInput.value : player.name;
+    playerTitle.textContent = player.name;
+    playerTitle.style.display = 'block';
+    playerForm.style.display = 'none';
+    playerScore.style.display = 'flex';
 }
 
-// shuffles the deck array and build both player1.deck and deck2
+// shuffles the deck array and build both player.deck and deck2
 function deckShuffling() {
     currentIndex = deck.length;
     var randomIndex, storingValue;
@@ -164,58 +162,60 @@ function deckShuffling() {
         deck[currentIndex] = deck[randomIndex];
         deck[randomIndex] = storingValue;
     }
-    player1.deck = deck.slice(0, deck.length / 2);
+    player.deck = deck.slice(0, deck.length / 2);
     computer.deck = deck.slice(deck.length / 2);
 }
 
 // render the board after the player chose the game play
 function startingBoard() {
     message.textContent = 'enter your name';
-    player1.name = 'Player 1';
-    player1Card.setAttribute('class', 'card size');
-    player2Card.setAttribute('class', 'card size');
+    player.name = 'Player 1';
+    playerCard.setAttribute('class', 'card size');
+    computerCard.setAttribute('class', 'card size');
+    playerDeck.style.opacity = '1';
+    computerDeck.style.opacity = '1';
+
+    playerInput.value = '';
+    playerForm.style.display = 'block';
+    playerTitle.style.display = 'none';
+    playerScore.style.display = 'none';
     
-    player1Input.value = '';
-    player1Form.style.display = 'block';
-    player1Title.style.display = 'none';
-    
-    player2Title.style.display = 'none';
-    player1Score.style.display = "none";
-    player2Score.style.display = "none";
+    computerTitle.style.display = 'none';
+    computerScore.style.display = 'none';
     cardReset();
 }
 
 // renders the played cards with loosing/winning styling
-function player2WinsStyle() {
+function computerWinsStyle() {
     roundWinner = 'Computer';
-    player1Card.style.opacity = "0.3";
-    player2Card.style.borderColor = '#CF5247';
+    playerCard.style.opacity = '0.3';
+    computerCard.style.opacity = '1';
 }
-function player1WinsStyle() {
-    roundWinner = player1.name;
-    player2Card.style.opacity = "0.3";
-    player1Card.style.borderColor = '#26306F';
+function playerWinsStyle() {
+    roundWinner = player.name;
+    computerCard.style.opacity = '0.3';
+    playerCard.style.opacity = '1';
 }
 
 // renders the message with the winner of the game
 function displayWinner() {
     document.querySelector('h1').textContent === 'BATTLE' ? 
-    computer.deck.length === 0 && player1.deck.length !== 0 ?
-    (message.textContent = `${player1.name} won the war!`, winMusic.load()) : (message.textContent = `Computer won the war!`, looseMusic.load())
+    computer.deck.length === 0 && player.deck.length !== 0 ?
+    (message.textContent = `${player.name} won the war!`, winMusic.load(), playerWinsBattle(), computerDeck.style.opacity = '0.3') : (message.textContent = `Computer won the war!`, looseMusic.load(), computerWinsStyle(), playerDeck.style.opacity = '0.3')
     : document.querySelector('h1').textContent === 'SCORE' ? 
-    player1.score > computer.score ? 
-    (message.textContent = `${player1.name} won the war!`, winMusic.load()) : (message.textContent = `Computer won the war!`, looseMusic.load())
+    player.score > computer.score ? 
+    (message.textContent = `${player.name} won the war!`, winMusic.load(), playerWinsStyle(), computerDeck.style.opacity = '0.3') : (message.textContent = `Computer won the war!`, looseMusic.load(), computerWinsStyle(), playerDeck.style.opacity = '0.3')
     : -1;
 
-    player1Deck.removeEventListener('click', clickDeck1);
-    player1Deck.removeEventListener('click', clickBattleDeck1);
+    playerDeck.removeEventListener('click', clickDeck);
+    playerDeck.removeEventListener('click', clickBattleDeck);
 }
 
 // renders the message with the winner of the round
 function displayRoundWin () {
-    (player1.deck.length === 0 || computer.deck.length === 0) ? 
+    (player.deck.length === 0 || computer.deck.length === 0) ? 
     displayWinner() : roundWinner === 'tie' ? 
-    (message.textContent = `It's a ${roundWinner}!`, player1Card.style.opacity = 0.3, player2Card.style.opacity = 0.3) :
+    (message.textContent = `It's a ${roundWinner}!`, playerCard.style.opacity = 0.3, computerCard.style.opacity = 0.3) :
     message.textContent = `${roundWinner} won the battle!`;
 }
 
@@ -226,7 +226,7 @@ function battleInit() {
     removeIntroPage();
     document.querySelector('header > h1').textContent = 'BATTLE';
     createCardsLeftDisplay();
-    player1.deck = [];
+    player.deck = [];
     computer.deck = [];
     deckShuffling();
     startingBoard();
@@ -235,76 +235,76 @@ function battleInit() {
 }
 
 function battleDeckButtons() {
-    player1Deck.addEventListener('click', clickBattleDeck1);
+    playerDeck.addEventListener('click', clickBattleDeck);
 }
 
 // renders updated game board and checks who's the round winner
-function clickBattleDeck1() {
-    player1Name();
-    player2Name();
+function clickBattleDeck() {
+    playerName();
+    computerName();
     cardReset();
 
     // if message.textcontent is telling a round winner, reset the board game
     (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
-    (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
+    (playerCard.setAttribute('class', 'card size'), computerCard.setAttribute('class', 'card size')) : -1;
     
-    player1Deck.removeEventListener('click', clickBattleDeck1); // disable the click on the deck
+    playerDeck.removeEventListener('click', clickBattleDeck); // disable the click on the deck
     
     // assign to card1 the first parseInt value of deck1
-    card1 = parseInt(player1.deck[0].slice(1));
+    card1 = parseInt(player.deck[0].slice(1));
     card2 = parseInt(computer.deck[0].slice(1));
     
     // render the card on the battlefield
-    player1Card.setAttribute('class', `card size ${player1.deck[0]}`);
-    player2Card.setAttribute('class', `card size ${computer.deck[0]}`);
+    playerCard.setAttribute('class', `card size ${player.deck[0]}`);
+    computerCard.setAttribute('class', `card size ${computer.deck[0]}`);
 
     getBattleScore();
 }
 
 // check the winner
 function getBattleScore() {   
-    player1.deck.push(player1.deck.shift());
+    player.deck.push(player.deck.shift());
     computer.deck.push(computer.deck.shift());
     var roundScore = card1 - card2;
     roundScore === 0 ? roundWinner = 'tie' :
-    roundScore > 0 ? (player1WinsStyle(), player1WinsBattle()) : (player2WinsStyle(), player2WinsBattle());
+    roundScore > 0 ? (playerWinsStyle(), playerWinsBattle()) : (computerWinsStyle(), computerWinsBattle());
     battleDeckButtons();
     displayCardsLeft();
 }
 
 // compute the winner's gain
-function player2WinsBattle() {
+function computerWinsBattle() {
     var cardLost = [];
-    card2 === 11 ? (cardLost = player1.deck.splice(0, 2), computer.deck = computer.deck.concat(cardLost)) :
-    card2 === 12 ? (cardLost = player1.deck.splice(0, 3), computer.deck = computer.deck.concat(cardLost)) :
-    card2 === 13 ? (cardLost = player1.deck.splice(0, 4), computer.deck = computer.deck.concat(cardLost)) : 
-    card2 === 14 ? (cardLost = player1.deck.splice(0, 5), computer.deck = computer.deck.concat(cardLost)) :
-    (cardLost = player1.deck.splice(0, 1), computer.deck = computer.deck.concat(cardLost));
+    card2 === 11 ? (cardLost = player.deck.splice(0, 2), computer.deck = computer.deck.concat(cardLost)) :
+    card2 === 12 ? (cardLost = player.deck.splice(0, 3), computer.deck = computer.deck.concat(cardLost)) :
+    card2 === 13 ? (cardLost = player.deck.splice(0, 4), computer.deck = computer.deck.concat(cardLost)) : 
+    card2 === 14 ? (cardLost = player.deck.splice(0, 5), computer.deck = computer.deck.concat(cardLost)) :
+    (cardLost = player.deck.splice(0, 1), computer.deck = computer.deck.concat(cardLost));
 }
-function player1WinsBattle() {
+function playerWinsBattle() {
     var cardLost = [];
-    card1 === 11 ? (cardLost = computer.deck.splice(0, 2), player1.deck = player1.deck.concat(cardLost)) :
-    card1 === 12 ? (cardLost = computer.deck.splice(0, 3), player1.deck = player1.deck.concat(cardLost)) :
-    card1 === 13 ? (cardLost = computer.deck.splice(0, 4), player1.deck = player1.deck.concat(cardLost)) : 
-    card1 === 14 ? (cardLost = computer.deck.splice(0, 5), player1.deck = player1.deck.concat(cardLost)) :
-    (cardLost = computer.deck.splice(0, 1), player1.deck = player1.deck.concat(cardLost));
+    card1 === 11 ? (cardLost = computer.deck.splice(0, 2), player.deck = player.deck.concat(cardLost)) :
+    card1 === 12 ? (cardLost = computer.deck.splice(0, 3), player.deck = player.deck.concat(cardLost)) :
+    card1 === 13 ? (cardLost = computer.deck.splice(0, 4), player.deck = player.deck.concat(cardLost)) : 
+    card1 === 14 ? (cardLost = computer.deck.splice(0, 5), player.deck = player.deck.concat(cardLost)) :
+    (cardLost = computer.deck.splice(0, 1), player.deck = player.deck.concat(cardLost));
 }
 
 // creates the counter of cards left for each player
 function createCardsLeftDisplay() {
     var score1 = document.createElement('p');
     var score2 = document.createElement('p');
-    player1Score.appendChild(score1);
-    player2Score.appendChild(score2);
+    playerScore.appendChild(score1);
+    computerScore.appendChild(score2);
     score1.innerHTML = 'Cards<br>Left';
     score2.innerHTML = 'Cards<br>Left';
 }
 
 // display updated amount of cards left for each player
 function displayCardsLeft() {
-    document.querySelector('#player1Score').textContent = player1.deck.length;
-    document.querySelector('#player2Score').textContent = computer.deck.length;
-    (player1.deck.length == computer.deck.length) ? -1 : displayRoundWin();
+    document.querySelector('#player-score').textContent = player.deck.length;
+    document.querySelector('#computer-score').textContent = computer.deck.length;
+    (player.deck.length == computer.deck.length) ? -1 : displayRoundWin();
 }
 
 
@@ -314,10 +314,10 @@ function scoreInit() {
     removeIntroPage();
     createScoreDisplay();
     document.querySelector('header > h1').textContent = 'SCORE';
-    player1.deck = [];
+    player.deck = [];
     computer.deck = [];
     deckShuffling();
-    player1.score = 0;
+    player.score = 0;
     computer.score = 0;
     startingBoard();
     scoreDeckButtons();
@@ -326,30 +326,27 @@ function scoreInit() {
 
 // enables clicks on the decks with the score gameplay triggered when the event occurs
 function scoreDeckButtons () {
-    player1Deck.addEventListener('click', clickDeck1);
+    playerDeck.addEventListener('click', clickDeck);
 }
 
 // renders updated game board and checks, when both cards are on field, who's the round winner
-function clickDeck1() {
-    player1Name();
-    player2Name();
+function clickDeck() {
+    playerName();
+    computerName();
     cardReset();
 
     (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
-    (player1Card.setAttribute('class', 'card size'), player2Card.setAttribute('class', 'card size')) : -1;
+    (playerCard.setAttribute('class', 'card size'), computerCard.setAttribute('class', 'card size')) : -1;
 
-    player1Deck.removeEventListener('click', clickDeck1);
+    playerDeck.removeEventListener('click', clickDeck);
     
-    // assign to card1 the first parseInt value of deck1
-    card1 = parseInt(player1.deck[0].slice(1));
+    card1 = parseInt(player.deck[0].slice(1));
     card2 = parseInt(computer.deck[0].slice(1));
     
-    // render the card on the battlefield
-    player1Card.setAttribute('class', `card size ${player1.deck[0]}`);
-    player2Card.setAttribute('class', `card size ${computer.deck[0]}`);
+    playerCard.setAttribute('class', `card size ${player.deck[0]}`);
+    computerCard.setAttribute('class', `card size ${computer.deck[0]}`);
     
-    // shift this value from player1.deck
-    player1.deck.shift();
+    player.deck.shift();
     computer.deck.shift();
 
     getScore();
@@ -360,7 +357,7 @@ function getScore() {
     var roundScore = card1 - card2;
     roundScore === 0 ? roundWinner = 'tie' :
     roundScore > 0 ? 
-    (player1.score += roundScore, player1WinsStyle()) : (computer.score += (roundScore * -1), player2WinsStyle());
+    (player.score += roundScore, playerWinsStyle()) : (computer.score += (roundScore * -1), computerWinsStyle());
     scoreDeckButtons();
     displayScores();
 }
@@ -369,8 +366,8 @@ function getScore() {
 function createScoreDisplay() {
     var score1 = document.createElement('p');
     var score2 = document.createElement('p');
-    player1Score.appendChild(score1);
-    player2Score.appendChild(score2);
+    playerScore.appendChild(score1);
+    computerScore.appendChild(score2);
 
     score1.textContent = 'Score';
     score2.textContent = 'Score';
@@ -378,7 +375,7 @@ function createScoreDisplay() {
 
 // renders updated scores after each round
 function displayScores() {
-    player1.deck.length === 26 ? (player1.score = 0, computer.score = 0) : displayRoundWin();
-    document.querySelector('#player1Score').textContent = player1.score;
-    document.querySelector('#player2Score').textContent = computer.score;
+    player.deck.length === 26 ? (player.score = 0, computer.score = 0) : displayRoundWin();
+    document.querySelector('#player-score').textContent = player.score;
+    document.querySelector('#computer-score').textContent = computer.score;
 }

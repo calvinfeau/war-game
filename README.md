@@ -19,16 +19,21 @@ The winner of each round adds to its deck the opponent's card just played.
 
 ![home page](images/Readme-screenshots/battle-screen.png)
 
+<br>
 
 # Technologies Used
 
 HTML5 | CSS3 | Javascript
 
-# Getting Started
-(Link Here)
+<br>
 
+# Getting Started
+https://calvinfeau.github.io/war-game/
+
+<br>
 
 # Next Steps
-Adding a choice of card amount to start with (1 deck, 2 decks, etc...).
-<br> Adding songs when a round is won/lost by the player.
-<br> Adding an animation (e.g. fireworks) above winner's deck when the war is over.
+* Adding a choice of card amount to start with (1 deck, 2 decks, etc...).
+* Adding songs when a round is won/lost by the player.
+* Adding an animation (e.g. fireworks) above winner's deck when the war is over.
+* Create a third gameplay called 'Casino'. 
