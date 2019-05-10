@@ -54,10 +54,9 @@ header {
   justify-content: space-around;
   align-content: space-between;
   align-items: center;
-  height: 19vh;
+  height: 20vh;
   width: 100vw;
   font-size: 3vh;
-  margin-top: 1vh;
   background-color: #1226aa;
   color: #ffffff;
 }
