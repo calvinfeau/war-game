@@ -15,9 +15,7 @@ const deck = [
 // STATE VARIABLES 
 
 // create the 2 player's object
-var player1 = {
-    name: 'Player 1'
-};
+var player1 = {};
 var computer = {
     name: 'Computer'
 };
@@ -49,6 +47,14 @@ const player2Card = document.querySelector('#battlefield > #player2 > #card2');
 //player's score
 const player1Score = document.querySelector("#info > #player1 > .scoreGame")
 const player2Score = document.querySelector("#info > #player2 > .scoreGame")
+
+// winning / loosing audio
+var winMusic = document.createElement('audio');
+winMusic.setAttribute('src', 'audio/yeehaw.mp3');
+winMusic.autoplay = true;
+var looseMusic = document.createElement('audio');
+looseMusic.setAttribute('src', 'audio/boo3.mp3');
+looseMusic.autoplay = true;
 
 // _____________________________________________________________
 // EVENT LISTENERS
@@ -165,6 +171,7 @@ function deckShuffling() {
 // render the board after the player chose the game play
 function startingBoard() {
     message.textContent = 'enter your name';
+    player1.name = 'Player 1';
     player1Card.setAttribute('class', 'card size');
     player2Card.setAttribute('class', 'card size');
     
@@ -192,9 +199,13 @@ function player1WinsStyle() {
 
 // renders the message with the winner of the game
 function displayWinner() {
-    ((player1.score > computer.score) || (computer.deck.length === 0 && player1.deck.length !== 0)) ? 
-    message.textContent = `${player1.name} won the war!`
-    : message.textContent = `Computer won the war!`;
+    document.querySelector('h1').textContent === 'BATTLE' ? 
+    computer.deck.length === 0 && player1.deck.length !== 0 ?
+    (message.textContent = `${player1.name} won the war!`, winMusic.load()) : (message.textContent = `Computer won the war!`, looseMusic.load())
+    : document.querySelector('h1').textContent === 'SCORE' ? 
+    player1.score > computer.score ? 
+    (message.textContent = `${player1.name} won the war!`, winMusic.load()) : (message.textContent = `Computer won the war!`, looseMusic.load())
+    : -1;
 
     player1Deck.removeEventListener('click', clickDeck1);
     player1Deck.removeEventListener('click', clickBattleDeck1);
