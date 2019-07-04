@@ -10,37 +10,37 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <script defer src="js/main.js"></script>
 </head>
-
 <body>
     <header>
         <h1></h1>
-        <nav class="menu"><button id="reset">Replay</button><p id="message"></p><button id="home">Home</button></nav>
+        <nav class="menu">
+            <button id="reset">Replay</button>
+            <p id="message"></p>
+            <button id="home">Home</button>
+        </nav>
     </header>
-
-
     <main>
         <section id="battlefield">
             <div id="player-field">
                 <div class="card size back-blue"></div>
                 <div class="card size" id="card1"></div>
             </div>
-            
             <div id="computer-field">
                 <div class="card size" id="card2"></div>
                 <div class="card size back-red"></div>
             </div>
         </section>
-        
-        
         <section id="info">
             <div id="player-info">
-                <form><input id= "input" type="text" placeholder="name"><input id='name-btn' type="submit" value="✓"></form>
+                <form>
+                    <input id= "input" type="text" placeholder="name">
+                    <input id='name-btn' type="submit" value="✓">
+                </form>
                 <div class="score-game">
                     <h2></h2>
                     <div class="score" id="player-score"></div>
                 </div>
             </div>
-            
             <div id="computer-info">
                 <div class="score-game">
                     <h2></h2>

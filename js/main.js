@@ -1,7 +1,3 @@
-
-// _____________________________________________________________
-// CONSTANTS IN THE GLOBAL SCOPE
-
 // full card deck (without the joker)
 const deck = [
     's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 
@@ -10,22 +6,18 @@ const deck = [
     'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'd10', 'd11', 'd12', 'd13', 'd14', 
 ];
 
-
-// _____________________________________________________________
-// STATE VARIABLES 
-
-// create the 2 player's object
+// player & Computer objects
 var player = {};
 var computer = {
     name: 'Computer'
 };
 
-// initialize variables that will store the value of the card played by both player each round and the result of each round
+// card played by both player each round 
+// and the result of each round
 var  roundWinner, card1, card2;
 
-
 // _____________________________________________________________
-// CACHED ELEMENT REFERENCES
+// CACHED ELEMENT REFERENCES 
 
 // reset button and message
 const resetBtn = document.querySelector('.menu > #reset');
@@ -64,7 +56,7 @@ resetBtn.addEventListener('click', reset);
 menuBtn.addEventListener('click', introduction);
 
 // _____________________________________________________________
-// CREATE THE HOME PAGE
+// HOME PAGE
 
 var introText = document.createElement('article');
 var scoreChoice = document.createElement('article');
@@ -102,10 +94,7 @@ function introduction() {
 }
 
 // _____________________________________________________________
-// FUNCTIONNALITIES
-
-
-// GENERAL GAME FUNCTIONS
+// GENERAL GAMEPLAY
 
 // removes the home page and display the game page
 function removeIntroPage() {
@@ -151,7 +140,7 @@ function playerName() {
     playerScore.style.display = 'flex';
 }
 
-// shuffles the deck array and build both player.deck and deck2
+// shuffles the deck array and build both player.deck and computer.deck
 function deckShuffling() {
     currentIndex = deck.length;
     var randomIndex, storingValue;
@@ -166,7 +155,7 @@ function deckShuffling() {
     computer.deck = deck.slice(deck.length / 2);
 }
 
-// render the board after the player chose the game play
+// renders the board after the player chose the game play
 function startingBoard() {
     message.textContent = 'enter your name';
     player.name = 'Player 1';
@@ -219,8 +208,8 @@ function displayRoundWin () {
     message.textContent = `${roundWinner} won the battle!`;
 }
 
-
-// BATTLE VERSION FUNCTIONS
+// _____________________________________________________________
+// BATTLE GAMEPLAY 
 
 function battleInit() {
     removeIntroPage();
@@ -234,6 +223,7 @@ function battleInit() {
     displayCardsLeft();
 }
 
+// enables clicks on the decks with the battle gameplay triggered when the event occurs
 function battleDeckButtons() {
     playerDeck.addEventListener('click', clickBattleDeck);
 }
@@ -244,17 +234,14 @@ function clickBattleDeck() {
     computerName();
     cardReset();
 
-    // if message.textcontent is telling a round winner, reset the board game
     (message.textContent === `It's a ${roundWinner}!` || message.textContent === `${roundWinner} won the battle!`) ? 
     (playerCard.setAttribute('class', 'card size'), computerCard.setAttribute('class', 'card size')) : -1;
     
     playerDeck.removeEventListener('click', clickBattleDeck); // disable the click on the deck
     
-    // assign to card1 the first parseInt value of deck1
     card1 = parseInt(player.deck[0].slice(1));
     card2 = parseInt(computer.deck[0].slice(1));
     
-    // render the card on the battlefield
     playerCard.setAttribute('class', `card size ${player.deck[0]}`);
     computerCard.setAttribute('class', `card size ${computer.deck[0]}`);
 
@@ -307,8 +294,8 @@ function displayCardsLeft() {
     (player.deck.length == computer.deck.length) ? -1 : displayRoundWin();
 }
 
-
-// SCORE VERSION FUNCTIONS
+// _____________________________________________________________
+// SCORE GAMEPLAY
 
 function scoreInit() { 
     removeIntroPage();
